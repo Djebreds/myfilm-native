@@ -1,13 +1,19 @@
 <?php
-require '../BusinessLogic/database.php';
-$db = new Dabes();
-$genres = $db->showListGenres();
-$directors = $db->showDirector();
-$productions = $db->showProduction();
+require '../../BusinessLogic/Dabes.php';
+require '../../BusinessLogic/Create.php';
+require '../../BusinessLogic/Read.php';
+// $db = new Dabes();
+$create = new CreateFilm();
+$read = new Read();
+
+$genres = $read->showListGenres();
+$directors = $read->showDirector();
+$productions = $read->showProduction();
+
 
 
 if (isset($_POST['add'])) {
-    if ($db->addFilm($_POST) > 0) {
+    if ($create->addFilm($_POST) > 0) {
         // $upload = $db->uploadFilm($_FILES);
         // $status = $db->addFilm($_POST);
         echo "DATA BERHASIL DITAMBAHKAN";

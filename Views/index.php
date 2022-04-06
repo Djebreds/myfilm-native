@@ -1,4 +1,19 @@
 <?php require_once 'header.php' ?>
+<style>
+    .footer {
+        width: 100%;
+        height: 80px;
+    }
+
+    .footer p {
+        margin: 0;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 300;
+        color: grey;
+    }
+</style>
+
 <div class="container-md">
     <h1 class="text-center mt-2">Daftar Film</h1>
     <div class="row justify-content-center">

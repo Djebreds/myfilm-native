@@ -1,33 +1,21 @@
 <?php
-require '../BusinessLogic/database.php';
-$db = new Dabes();
+require '../../BusinessLogic/Dabes.php';
+require '../../BusinessLogic/Read.php';
+require '../../BusinessLogic/Update.php';
+
+$read = new Read();
+$update = new Update();
 
 $id_film = $_GET['id_film'];
-$films = $db->showFilmsById($id_film);
-$genres = $db->showListGenres();
-$directors = $db->showDirector();
-$productions = $db->showProduction();
-
-// $sql = "SELECT films.id_film, films.picture, films.title, genres_films.genre_name, productions.name_production, films.release_date FROM films 
-//                 INNER JOIN films_genres ON films.id_film = films_genres.film_id 
-//                 INNER JOIN films_productions ON films.id_film = films_productions.film_id
-//                 INNER JOIN genres_films ON genres_films.genre_id = films_genres.genre_id 
-//                 INNER JOIN productions ON productions.id_production = films_productions.production_id
-//                 WHERE films.id_film = '$id_film'";
-// $films = $this->db->prepare($sql);
-// $film->execute();
-// $result = $film->fetchAll(PDO::FETCH_ASSOC);
-
+$films = $read->showFilmsById($id_film);
+$genres = $read->showListGenres();
+$directors = $read->showDirector();
+$productions = $read->showProduction();
 
 $checked = explode(', ', $films[0]['genre_name']);
 
-
-// $films = $db->showFilms();
-
 if (isset($_POST['edit'])) {
-    if ($db->updateFilm($_POST) > 0) {
-        // $upload = $db->uploadFilm($_FILES);
-        // $status = $db->addFilm($_POST);
+    if ($update->updateFilm($_POST) > 0) {
         echo "DATA BERHASIL DITAMBAHKAN";
     } else {
         echo "FAILED";
