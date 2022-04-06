@@ -25,16 +25,23 @@ $films = $db->showFilms();
             <td>Genre</td>
             <td>Production</td>
             <td>Release Date</td>
+            <td>Action</td>
         </tr>
+        <?php $a = 1 ?>
         <?php foreach ($films as $film) : ?>
             <tr>
-                <td><?php echo $film['id_film'] ?></td>
-                <td><?php echo $film['picture'] ?></td>
+                <td><?php echo $a ?></td>
+                <td><img src="uploaded/<?php echo $film['picture'] ?>" alt="<?php echo $film['picture'] ?>" width="120" height="120"></td>
                 <td><?php echo $film['title'] ?></td>
                 <td><?php echo $film['genre_name'] ?></td>
                 <td><?php echo $film['name_production'] ?></td>
                 <td><?php echo $film['release_date'] ?></td>
+                <td>
+                    <a href="update-film.php?id_film=<?php echo $film['id_film'] ?>">Edit</a>
+                    <a href="delete-film.php?id_film=<?php echo $film['id_film'] ?>">Delete</a>
+                </td>
             </tr>
+            <?php $a++ ?>
         <?php endforeach ?>
     </table>
 </body>

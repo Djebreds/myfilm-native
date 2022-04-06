@@ -7,14 +7,12 @@ $productions = $db->showProduction();
 
 
 if (isset($_POST['add'])) {
-    var_dump($_FILES);
-    die;
-    $upload = $db->uploadFilm($_FILES);
-    $status = $db->addFilm($_POST);
-    if ($status) {
+    if ($db->addFilm($_POST) > 0) {
+        // $upload = $db->uploadFilm($_FILES);
+        // $status = $db->addFilm($_POST);
         echo "DATA BERHASIL DITAMBAHKAN";
     } else {
-        echo "DATA GAGAL DITAMBAHKAN";
+        echo "FAILED";
     }
 }
 
@@ -79,7 +77,7 @@ if (isset($_POST['add'])) {
                 <td><label for="production">Production</label></td>
                 <td>
                     <select name="production" id="production">
-                        <option value="">Select Genre</option>
+                        <option value="">Select Production</option>
                         <?php foreach ($productions as $production) : ?>
                             <option value="<?php echo $production['id_production'] ?>"><?php echo $production['name_production'] ?></option>
                         <?php endforeach; ?>
