@@ -24,6 +24,14 @@ class Read extends Dabes
         $data = $query->fetchAll();
         return $data;
     }
+    public function showTableFilm()
+    {
+        $sql = "SELECT * FROM films";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
     public function showFilms()
     {
         $sql = "SELECT films.id_film, films.picture, films.title, genres_films.genre_name, productions.name_production, films.release_date, directors.name FROM films 

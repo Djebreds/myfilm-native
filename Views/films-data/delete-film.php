@@ -1,6 +1,6 @@
 <?php
-require '../BusinessLogic/Dabes.php';
-require '../BusinessLogic/Delete.php';
+require '../../BusinessLogic/Dabes.php';
+require '../../BusinessLogic/Delete.php';
 
 $delete = new Delete();
 $id_film = $_GET['id_film'];
