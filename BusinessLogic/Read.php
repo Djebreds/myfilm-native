@@ -48,7 +48,14 @@ class Read extends Dabes
         return $data;
     }
 
-
+    public function searchFilm($search)
+    {
+        $sql = "SELECT title, picture, release_date, runtime FROM films WHERE title LIKE '%$search%'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
 
     public function showFilmsById($id)
     {

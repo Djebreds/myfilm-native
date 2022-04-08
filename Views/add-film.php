@@ -10,21 +10,91 @@ $genres = $read->showListGenres();
 $directors = $read->showDirector();
 $productions = $read->showProduction();
 
+$error = "";
+$message = "";
+$title = "";
+
+$titleErr = $pictureErr = $genreErr = $releaseErr = $runtimeErr = $directorErr = $productionErr = "";
+
 
 
 if (isset($_POST['add'])) {
-    if ($create->addFilm($_POST) > 0) {
-        // $upload = $db->uploadFilm($_FILES);
-        // $status = $db->addFilm($_POST);
-        echo "DATA BERHASIL DITAMBAHKAN";
+    if (empty($_POST['title'])) {
+        $titleErr = "Title is required";
     } else {
-        echo "FAILED";
+        if (!preg_match("/^[a-zA-Z-' ]*$", $_POST['title'])) {
+            $titleErr = "Only letter and white space allowed";
+        }
+    }
+    if (empty($_POST['runtime'])) {
+        $titleErr = "runtime is required";
+    } else {
+        if (!preg_match('/^[0-9]*$/', $_POST['title'])) {
+            $titleErr = "Only number is required";
+        }
+    }
+    if (empty($_POST['picture'])) {
+        $pictureErr = "picture is required";
+    }
+    if (empty($_POST['genre'])) {
+        $titleErr = "genre require min 1 genres ";
+    }
+    if (empty($_POST['release_date'])) {
+        $titleErr = "Release date is required";
+    }
+    if (empty($_POST['production'])) {
+        $titleErr = "Production is required";
+    }
+    if (empty($_POST['director'])) {
+        $titleErr = "Director is required";
+    }
+
+
+
+    if ($create->addFilm($_POST) > 0) {
+        $error = false;
+        $message = " <svg xmlns='http://www.w3.org/2000/svg' style='display: none;'>
+                        <symbol id='check-circle-fill' fill='currentColor' viewBox='0 0 16 16'>
+                            <path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z' />
+                        </symbol>
+                    </svg>
+                    <div class='alert alert-success d-flex alert-dismissible fade show' role='alert'>
+                        <svg class='bi flex-shrink-0 me-2' width='24' height='24' role='img' aria-label='Success:'>
+                            <use xlink:href='#check-circle-fill' />
+                        </svg>
+                        <div>
+                            Film successfuly to added <a href='simpan.php' class='alert-link'>Lihat Data</a>.
+                        </div>
+                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
+    } else {
+        $error = true;
+        $message = "<svg xmlns='http://www.w3.org/2000/svg' style='display: none;'>
+                        <symbol id='exclamation-triangle-fill' fill='currentColor' viewBox='0 0 16 16'>
+                            <path d='M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z' />
+                        </symbol>
+                    </svg>
+                    <div class='alert alert-danger d-flex alert-dismissible fade show' role='alert'>
+                        <svg class='bi flex-shrink-0 me-2' width='24' height='24' role='img' aria-label='Success:'>
+                            <use xlink:href='#check-circle-fill' />
+                        </svg>
+                        <div>
+                            <b>Have some trouble<b>. Failed to add Film
+                        </div>
+                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
     }
 }
 
 ?>
 
 <?php require 'header.php' ?>
+<style>
+    img {
+        max-width: 100px;
+        width: 20%;
+    }
+</style>
 <h2>Add data Film</h2>
 <div class="row">
     <div class="col">
@@ -33,13 +103,20 @@ if (isset($_POST['add'])) {
                 Film
             </div>
             <div class="card-body">
-                <form action="" method="POST" enctype="multipart/form-data" class="form-group form-group-sm m-4 ">
-                    <img src="assests/bighero.jpeg" class="rounded mx-auto d-block" width="20%" height="40%" alt="...">
+                <?php if ($error == true) { ?>
+                    <?php echo $message; ?>
+                <?php } else { ?>
+                    <?php echo $message; ?>
+                <?php }  ?>
+                <form action="" method="POST" enctype="multipart/form-data" class="form-group form-group-sm m-4 pt-4" novalidate>
                     <div class="row justify-content-center">
+                        <div class="text-center">
+                            <img id="blah" src="http://placehold.it/180" class="img-fluid mt-2 rounded-3" alt="...">
+                        </div>
                         <div class="col-3">
                             <div class="mb-3 pt-2">
                                 <p class="form-label form-label-sm text-center">Upload poster</p>
-                                <input class="form-control form-control-sm" id="formFileSm" name="picture" type="file">
+                                <input class="form-control form-control-sm" id="formFileSm" name="picture" type="file" onchange="readURL(this);" required>
                             </div>
                         </div>
                     </div>
@@ -50,7 +127,7 @@ if (isset($_POST['add'])) {
                                 <div class="mb-3">
                                     <label for="title" class="form-label form-label-sm">Title</label>
                                     <div class="col-sm-11">
-                                        <input type="text" class="form-control form-control-sm" name="title" id="title">
+                                        <input type="text" class="form-control form-control-sm" name="title" id="title" required>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -59,7 +136,7 @@ if (isset($_POST['add'])) {
                                         <?php foreach ($genres as $genre) : ?>
                                             <div class="form-check">
                                                 <input type="hidden" name="genre_id" value="<?php echo $genre['id_list'] ?>">
-                                                <input class="form-check-input" type="checkbox" value="<?php echo $genre['genre_list'] ?>" name="genres[]" id="<?php echo $genre['genre_list'] ?>">
+                                                <input class="form-check-input" type="checkbox" value="<?php echo $genre['genre_list'] ?>" name="genres[]" id="<?php echo $genre['genre_list'] ?>" required>
                                                 <label class="form-check-label" for="<?php echo $genre['genre_list'] ?>">
                                                     <?php echo $genre['genre_list'] ?>
                                                 </label>
@@ -83,14 +160,14 @@ if (isset($_POST['add'])) {
                                             </svg></label>
                                     </div>
                                     <div class="col-5">
-                                        <input type="date" class="form-control form-control-sm" id="dates">
+                                        <input type="date" class="form-control form-control-sm" name="release_date" id="dates" required>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="row mb-3">
                                         <label for="runtime" class="form-label form-label-sm">Duration Film</label>
                                         <div class="col-sm-5">
-                                            <input type="text" class="form-control form-control-sm" name="title" id="runtime" placeholder="(minute)">
+                                            <input type="text" class="form-control form-control-sm" name="runtime" id="runtime" placeholder="(minute)" maxlength="3" required>
                                         </div>
                                         <div class="col-3">
                                             <label for="runtime" class="input-group-text btn btn-primary btn-sm" aria-describedby="inputGroup-sizing-sm" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 16 16">
@@ -103,7 +180,7 @@ if (isset($_POST['add'])) {
                                     <div class="row mb-3">
                                         <label for="director" class="form-label form-label-sm">Directors</label>
                                         <div class="col-10">
-                                            <select class="form-select form-select-sm" name="director" id="director" aria-label=".form-select-sm">
+                                            <select class="form-select form-select-sm" name="director" id="director" aria-label=".form-select-sm" required>
                                                 <option value="">Select Director</option>
                                                 <?php foreach ($directors as $director) : ?>
                                                     <option value="<?php echo $director['id'] ?>"><?php echo $director['name'] ?></option>
@@ -121,7 +198,7 @@ if (isset($_POST['add'])) {
                                     <div class="row mb-3">
                                         <label for="production" class="form-label form-label-sm">Productions</label>
                                         <div class="col-10">
-                                            <select class="form-select form-select-sm" name="production" id="production" aria-label=".form-select-sm">
+                                            <select class="form-select form-select-sm" name="production" id="production" aria-label=".form-select-sm" required>
                                                 <option value="">Select Production</option>
                                                 <?php foreach ($productions as $production) : ?>
                                                     <option value="<?php echo $production['id_production'] ?>"><?php echo $production['name_production'] ?></option>
@@ -142,13 +219,13 @@ if (isset($_POST['add'])) {
                         <div class="col">
                             <div class="mb-3">
                                 <p class="text-center" class="form-label" for="synopsis">Synopsis</p>
-                                <textarea class="form-control" id="synopsis" rows="10" placeholder="synopsis..."></textarea>
+                                <textarea class="form-control" id="synopsis" name="synopsis" rows="10" placeholder="synopsis..."></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="d-grid gap-2 col-6 mx-auto">
-                            <button class="btn btn-primary" name="add" type="submit">Button</button>
+                            <button class="btn btn-primary" name="add" type="submit">Save</button>
                         </div>
                         <div class="d-grid gap-2 col-6 mx-auto">
                             <button class="btn btn-danger" type="reset">Reset</button>
@@ -159,5 +236,4 @@ if (isset($_POST['add'])) {
         </div>
     </div>
 </div>
-
 <?php require 'footer.php' ?>

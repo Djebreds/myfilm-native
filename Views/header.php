@@ -166,6 +166,7 @@
             font-weight: 500;
         }
 
+
         /* 
         table.table {
             margin: 0 ;
