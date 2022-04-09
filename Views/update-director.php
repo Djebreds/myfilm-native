@@ -1,16 +1,18 @@
 <?php
 require '../BusinessLogic/Dabes.php';
-require '../BusinessLogic/Create.php';
+require '../BusinessLogic/Update.php';
 require '../BusinessLogic/Read.php';
 // $db = new Dabes();
-$create = new CreateFilm();
+$update = new Update();
 $read = new Read();
 $error = "";
 $message = "";
 
+$id = $_GET['id'];
+$director = $read->showDirectorById($id);
 
-if (isset($_POST['add'])) {
-    if ($create->addDirector_list($_POST) > 0) {
+if (isset($_POST['edit'])) {
+    if ($update->updateDirector($_POST) > 0) {
         $error = false;
         $message = " <svg xmlns='http://www.w3.org/2000/svg' style='display: none;'>
                         <symbol id='check-circle-fill' fill='currentColor' viewBox='0 0 16 16'>
@@ -61,11 +63,12 @@ if (isset($_POST['add'])) {
                     <?php echo $message; ?>
                 <?php }  ?>
                 <form action="" method="POST" enctype="multipart/form-data" class="form-control  pt-4 needs-validation" novalidate>
+                    <input type="hidden" name="id" value="<?php echo $director[0]['id'] ?>">
                     <div class="row justify-content-center">
                         <div class="col-3">
                             <div class="mb-3 pt-2">
                                 <p class="form-label form-label-sm text-center">Name Director</p>
-                                <input class="form-control form-control-sm" id="formFileSm" name="name_director" type="text" required>
+                                <input class="form-control form-control-sm" id="formFileSm" name="name_director" type="text" value="<?php echo $director[0]['name_director'] ?>" required>
                             </div>
                         </div>
                     </div>
@@ -74,13 +77,13 @@ if (isset($_POST['add'])) {
                         <div class="col">
                             <div class="mb-3">
                                 <p class="text-center" class="form-label" for="synopsis">About</p>
-                                <textarea class="form-control" id="synopsis" name="about_director" rows="12" placeholder="about..." required></textarea>
+                                <textarea class="form-control" id="synopsis" name="about_director" rows="12" placeholder="about..." required><?php echo $director[0]['about'] ?></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="d-grid gap-2 col-6 mx-auto">
-                            <button class="btn btn-primary" name="add" type="submit">Save</button>
+                            <button class="btn btn-primary" name="edit" type="submit">Save</button>
                         </div>
                         <div class="d-grid gap-2 col-6 mx-auto">
                             <button class="btn btn-danger" type="reset">Reset</button>

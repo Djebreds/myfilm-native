@@ -10,47 +10,13 @@ $genres = $read->showListGenres();
 $directors = $read->showDirector();
 $productions = $read->showProduction();
 
+
 $error = "";
 $message = "";
 $title = "";
-
-$titleErr = $pictureErr = $genreErr = $releaseErr = $runtimeErr = $directorErr = $productionErr = "";
-
-
+$genreErr = "";
 
 if (isset($_POST['add'])) {
-    if (empty($_POST['title'])) {
-        $titleErr = "Title is required";
-    } else {
-        if (!preg_match("/^[a-zA-Z-' ]*$", $_POST['title'])) {
-            $titleErr = "Only letter and white space allowed";
-        }
-    }
-    if (empty($_POST['runtime'])) {
-        $titleErr = "runtime is required";
-    } else {
-        if (!preg_match('/^[0-9]*$/', $_POST['title'])) {
-            $titleErr = "Only number is required";
-        }
-    }
-    if (empty($_POST['picture'])) {
-        $pictureErr = "picture is required";
-    }
-    if (empty($_POST['genre'])) {
-        $titleErr = "genre require min 1 genres ";
-    }
-    if (empty($_POST['release_date'])) {
-        $titleErr = "Release date is required";
-    }
-    if (empty($_POST['production'])) {
-        $titleErr = "Production is required";
-    }
-    if (empty($_POST['director'])) {
-        $titleErr = "Director is required";
-    }
-
-
-
     if ($create->addFilm($_POST) > 0) {
         $error = false;
         $message = " <svg xmlns='http://www.w3.org/2000/svg' style='display: none;'>
@@ -63,7 +29,7 @@ if (isset($_POST['add'])) {
                             <use xlink:href='#check-circle-fill' />
                         </svg>
                         <div>
-                            Film successfuly to added <a href='simpan.php' class='alert-link'>Lihat Data</a>.
+                            Film successfuly to added <a href='maintable-panel.php' class='alert-link'>See for more</a>.
                         </div>
                         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                     </div>";
@@ -91,8 +57,8 @@ if (isset($_POST['add'])) {
 <?php require 'header.php' ?>
 <style>
     img {
-        max-width: 100px;
-        width: 20%;
+        max-width: 15%;
+        width: 15%;
     }
 </style>
 <h2>Add data Film</h2>
@@ -108,7 +74,7 @@ if (isset($_POST['add'])) {
                 <?php } else { ?>
                     <?php echo $message; ?>
                 <?php }  ?>
-                <form action="" method="POST" enctype="multipart/form-data" class="form-group form-group-sm m-4 pt-4" novalidate>
+                <form action="" method="POST" enctype="multipart/form-data" class="form-control  pt-4 needs-validation" novalidate>
                     <div class="row justify-content-center">
                         <div class="text-center">
                             <img id="blah" src="http://placehold.it/180" class="img-fluid mt-2 rounded-3" alt="...">
@@ -133,29 +99,33 @@ if (isset($_POST['add'])) {
                                 <div class="row">
                                     <label for="<?php echo $genre['genre_list'] ?>" class="form-label form-label-sm">Genre</label>
                                     <div class="col-sm-7">
-                                        <?php foreach ($genres as $genre) : ?>
-                                            <div class="form-check">
-                                                <input type="hidden" name="genre_id" value="<?php echo $genre['id_list'] ?>">
-                                                <input class="form-check-input" type="checkbox" value="<?php echo $genre['genre_list'] ?>" name="genres[]" id="<?php echo $genre['genre_list'] ?>" required>
-                                                <label class="form-check-label" for="<?php echo $genre['genre_list'] ?>">
-                                                    <?php echo $genre['genre_list'] ?>
-                                                </label>
-                                            </div>
-                                        <?php endforeach; ?>
-                                        <a href="#" style="text-decoration: none;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 20 20">
-                                                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
-                                            </svg> Add new genre </a>
+                                        <div class="row">
+                                            <?php foreach ($genres as $genre) : ?>
+                                                <div class="col-6">
+                                                    <div class="form-check">
+                                                        <input type="hidden" name="genre_id" value="<?php echo $genre['id_list'] ?>">
+                                                        <input class="form-check-input {genres[]:true}" type="checkbox" value="<?php echo $genre['genre_list'] ?>" name="genres[]" id="<?php echo $genre['genre_list'] ?>" onchange="checkRequired();" required>
+                                                        <label class="form-check-label" for="<?php echo $genre['genre_list'] ?>">
+                                                            <?php echo $genre['genre_list'] ?>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            <?php endforeach; ?>
+                                            <a href="#" style="text-decoration: none;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 20 20">
+                                                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
+                                                </svg> Add new genre </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-1">
-                                <div class="vr" style="height: 450px;"></div>
+                                <div class="vr" style="height: 400px;"></div>
                             </div>
                             <div class="col-4">
                                 <div class="row mb-3">
                                     <label for="dates" class="form-label form-label-sm">Release Date</label>
                                     <div class="col-2">
-                                        <label for="dates" class="input-group-text btn btn-primary btn-sm" aria-describedby="inputGroup-sizing-sm" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar-event-fill" viewBox="0 0 16 16">
+                                        <label for="dates" class="input-group-text btn btn-primary btn-sm" aria-describedby="inputGroup-sizing-sm" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar-event-fill" viewBox="0 0 18 18">
                                                 <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z" />
                                             </svg></label>
                                     </div>
@@ -163,10 +133,11 @@ if (isset($_POST['add'])) {
                                         <input type="date" class="form-control form-control-sm" name="release_date" id="dates" required>
                                     </div>
                                 </div>
+
                                 <div class="col">
                                     <div class="row mb-3">
                                         <label for="runtime" class="form-label form-label-sm">Duration Film</label>
-                                        <div class="col-sm-5">
+                                        <div class="col-sm-6">
                                             <input type="text" class="form-control form-control-sm" name="runtime" id="runtime" placeholder="(minute)" maxlength="3" required>
                                         </div>
                                         <div class="col-3">
@@ -183,7 +154,7 @@ if (isset($_POST['add'])) {
                                             <select class="form-select form-select-sm" name="director" id="director" aria-label=".form-select-sm" required>
                                                 <option value="">Select Director</option>
                                                 <?php foreach ($directors as $director) : ?>
-                                                    <option value="<?php echo $director['id'] ?>"><?php echo $director['name'] ?></option>
+                                                    <option value="<?php echo $director['id'] ?>"><?php echo $director['name_director'] ?></option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
@@ -219,7 +190,7 @@ if (isset($_POST['add'])) {
                         <div class="col">
                             <div class="mb-3">
                                 <p class="text-center" class="form-label" for="synopsis">Synopsis</p>
-                                <textarea class="form-control" id="synopsis" name="synopsis" rows="10" placeholder="synopsis..."></textarea>
+                                <textarea class="form-control" id="synopsis" name="synopsis" rows="12" placeholder="synopsis..." required></textarea>
                             </div>
                         </div>
                     </div>

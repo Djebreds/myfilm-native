@@ -1,16 +1,18 @@
 <?php
 require '../BusinessLogic/Dabes.php';
-require '../BusinessLogic/Create.php';
+require '../BusinessLogic/Update.php';
 require '../BusinessLogic/Read.php';
 // $db = new Dabes();
-$create = new CreateFilm();
 $read = new Read();
+$update = new Update();
 $error = "";
 $message = "";
+$id_production = $_GET['id_production'];
+// $productions = $read->showProduction();
+$productions = $read->showProductionById($id_production);
 
-
-if (isset($_POST['add'])) {
-    if ($create->addDirector_list($_POST) > 0) {
+if (isset($_POST['edit'])) {
+    if ($update->updateProduction($_POST) > 0) {
         $error = false;
         $message = " <svg xmlns='http://www.w3.org/2000/svg' style='display: none;'>
                         <symbol id='check-circle-fill' fill='currentColor' viewBox='0 0 16 16'>
@@ -22,7 +24,7 @@ if (isset($_POST['add'])) {
                             <use xlink:href='#check-circle-fill' />
                         </svg>
                         <div>
-                            Director successfuly to added <a href='directortable-panel.php' class='alert-link'>See for more</a>.
+                            Production successfuly to edited <a href='productiontable-panel.php' class='alert-link'>See for more</a>.
                         </div>
                         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                     </div>";
@@ -38,7 +40,7 @@ if (isset($_POST['add'])) {
                             <use xlink:href='#check-circle-fill' />
                         </svg>
                         <div>
-                            <b>Have some trouble<b>. Failed to add director name
+                            <b>Have some trouble<b>. Failed to edit productions studios.
                         </div>
                         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                     </div>";
@@ -47,12 +49,12 @@ if (isset($_POST['add'])) {
 
 ?>
 <?php require 'header.php' ?>
-<h2>Add data director</h2>
+<h2>Add data production</h2>
 <div class="row">
     <div class="col">
-        <div class="card mt-4 border border-4 border-end-0 border-top-1 border-bottom-0 border-start-0 border-info shadow  mb-2 bg-body rounded mx-auto" style="width: 70rem;">
+        <div class="card mt-4 border border-4 border-end-0 border-top-1 border-bottom-0 border-start-0 border-warning shadow  mb-2 bg-body rounded mx-auto" style="width: 70rem;">
             <div class="card-header">
-                Director
+                Production
             </div>
             <div class="card-body">
                 <?php if ($error == true) { ?>
@@ -61,26 +63,39 @@ if (isset($_POST['add'])) {
                     <?php echo $message; ?>
                 <?php }  ?>
                 <form action="" method="POST" enctype="multipart/form-data" class="form-control  pt-4 needs-validation" novalidate>
-                    <div class="row justify-content-center">
-                        <div class="col-3">
-                            <div class="mb-3 pt-2">
-                                <p class="form-label form-label-sm text-center">Name Director</p>
-                                <input class="form-control form-control-sm" id="formFileSm" name="name_director" type="text" required>
+                    <input type="hidden" name="id_production" value="<?php echo $productions[0]['id_production'] ?>">
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="m-4">
+                                    <label for="title" class="form-label form-label-sm">Production</label>
+                                    <div class="col-sm-11">
+                                        <input type="text" class="form-control form-control-sm" name="name_production" id="title" value="<?php echo $productions[0]['name_production'] ?>" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="vr" style="height: 150px;"></div>
+                            </div>
+                            <div class="col-4">
+                                <div class="row m-4">
+                                    <label for="dates" class="form-label form-label-sm">Founded Date</label>
+                                    <div class="col-2 me-2">
+                                        <label for="dates" class="input-group-text btn btn-primary btn-sm" aria-describedby="inputGroup-sizing-sm" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-calendar-event-fill" viewBox="0 0 18 18">
+                                                <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z" />
+                                            </svg></label>
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="date" class="form-control form-control-sm" name="founded_date" id="dates" value="<?php echo $productions[0]['founded_date'] ?>" required>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <hr>
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-3">
-                                <p class="text-center" class="form-label" for="synopsis">About</p>
-                                <textarea class="form-control" id="synopsis" name="about_director" rows="12" placeholder="about..." required></textarea>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row mb-2">
-                        <div class="d-grid gap-2 col-6 mx-auto">
-                            <button class="btn btn-primary" name="add" type="submit">Save</button>
+                        <div class="d-grid gap-2 col-6 mx-auto ">
+                            <button class="btn btn-primary" name="edit" type="submit">Save</button>
                         </div>
                         <div class="d-grid gap-2 col-6 mx-auto">
                             <button class="btn btn-danger" type="reset">Reset</button>

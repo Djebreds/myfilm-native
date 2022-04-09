@@ -20,7 +20,7 @@ class CreateFilm extends Dabes
             return false;
         }
 
-        $query = $this->db->prepare("INSERT INTO Films (title, release_date, picture, synopsis ,runtime) VALUES (:title, :release_date, :picture, :synopsis, :runtime)");
+        $query = $this->db->prepare("INSERT INTO films (title, release_date, picture, synopsis ,runtime) VALUES (:title, :release_date, :picture, :synopsis, :runtime)");
         $query->bindParam(':title', $title);
         $query->bindParam(':synopsis', $synopsis);
         $query->bindParam(':release_date', $release_date);
@@ -69,8 +69,8 @@ class CreateFilm extends Dabes
     public function addGenre_ist($data)
     {
         $name_genre = self::validate($data['genre_list']);
-
-        $query = $this->db->prepare("INSERT INTO genre_list (genre_list) VALUES (:new_genre)");
+        $sql = "INSERT INTO genre_list (genre_list) VALUE (:new_genre)";
+        $query = $this->db->prepare($sql);
         $query->bindParam(':new_genre', $name_genre);
         $query->execute();
 
@@ -82,7 +82,8 @@ class CreateFilm extends Dabes
         $name_production = self::validate($data['name_production']);
         $founded_date = $data['founded_date'];
 
-        $query = $this->db->prepare("INSERT INTO productions (name_production, founded_date) VALUES ()");
+        $sql = "INSERT INTO productions (name_production, founded_date) VALUES (:new_production, :founded_date)";
+        $query = $this->db->prepare($sql);
         $query->bindParam(':new_production', $name_production);
         $query->bindParam(':founded_date', $founded_date);
         $query->execute();
@@ -92,13 +93,11 @@ class CreateFilm extends Dabes
 
     public function addDirector_list($data)
     {
-        $director_name = self::validate($data['name']);
-        $about = self::validate($data['about']);
+        $director_name = self::validate($data['name_director']);
+        $about = self::validate($data['about_director']);
 
-        $query = "INSERT INTO directors (name, about) VALUES ('$director_name', '$about')";
-        $query = $this->db->prepare("INSERT INTO directors (name, about) VALUES ()");
-        $query->bindParam(':new_director', $director_name);
-        $query->bindParam(':about', $about);
+        $sql = "INSERT INTO directors (name_director, about) VALUES ('$director_name', '$about')";
+        $query = $this->db->prepare($sql);
         $query->execute();
 
         return $query->rowCount();

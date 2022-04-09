@@ -32,7 +32,7 @@ if (isset($_POST['edit'])) {
                             <use xlink:href='#check-circle-fill' />
                         </svg>
                         <div>
-                            Film successfuly to added <a href='simpan.php' class='alert-link'>Lihat Data</a>.
+                            Film successfuly to edit <a href='filmtable-panel.php' class='alert-link'>Lihat Data</a>.
                         </div>
                         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                     </div>";
@@ -48,7 +48,7 @@ if (isset($_POST['edit'])) {
                             <use xlink:href='#check-circle-fill' />
                         </svg>
                         <div>
-                            <b>Have some trouble<b>. Failed to add Film
+                            <b>Have some trouble<b>. Failed to edit Film
                         </div>
                         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                     </div>";
@@ -79,7 +79,7 @@ if (isset($_POST['edit'])) {
                     <?php } else { ?>
                         <?php echo $message; ?>
                     <?php }  ?>
-                    <form action="" method="POST" enctype="multipart/form-data" class="form-group form-group-sm m-4 pt-4" novalidate>
+                    <form action="" method="POST" enctype="multipart/form-data" class="form-group form-group-sm m-4 pt-4 needs-validation">
                         <input type="hidden" name="id_film" value="<?php echo $films[0]['id_film'] ?>">
                         <input type="hidden" name="oldPicture" value="<?php echo $films[0]['picture'] ?>">
                         <div class="row justify-content-center">
@@ -115,23 +115,27 @@ if (isset($_POST['edit'])) {
                                     <div class="row">
                                         <label for="<?php echo $genre['genre_list'] ?>" class="form-label form-label-sm">Genre</label>
                                         <div class="col-sm-7">
-                                            <?php foreach ($genres as $genre) : ?>
-                                                <div class="form-check">
-                                                    <input type="hidden" name="genre_id" value="<?php echo $genre['id_list'] ?>">
-                                                    <input class="form-check-input" type="checkbox" value="<?php echo $genre['genre_list'] ?>" name="genres[]" id="<?php echo $genre['genre_list'] ?>" <?php in_array($genre['genre_list'], $checked) ? print "checked" : "" ?> required>
-                                                    <label class="form-check-label" for="<?php echo $genre['genre_list'] ?>">
-                                                        <?php echo $genre['genre_list'] ?>
-                                                    </label>
-                                                </div>
-                                            <?php endforeach; ?>
-                                            <a href="#" style="text-decoration: none;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 20 20">
-                                                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
-                                                </svg> Add new genre </a>
+                                            <div class="row">
+                                                <?php foreach ($genres as $genre) : ?>
+                                                    <div class="col-6">
+                                                        <div class="form-check">
+                                                            <input type="hidden" name="genre_id" value="<?php echo $genre['id_list'] ?>">
+                                                            <input class="form-check-input {genre[]:true}" type="checkbox" value="<?php echo $genre['genre_list'] ?>" name="genres[]" id="<?php echo $genre['genre_list'] ?>" <?php in_array($genre['genre_list'], $checked) ? print "checked" : "" ?> required onchange="checkRequired();">
+                                                            <label class="form-check-label" for="<?php echo $genre['genre_list'] ?>">
+                                                                <?php echo $genre['genre_list'] ?>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                                <a href="#" style="text-decoration: none;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 20 20">
+                                                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
+                                                    </svg> Add new genre </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-1">
-                                    <div class="vr" style="height: 450px;"></div>
+                                    <div class="vr" style="height: 400px;"></div>
                                 </div>
                                 <div class="col-4">
                                     <div class="row mb-3">
@@ -165,7 +169,7 @@ if (isset($_POST['edit'])) {
                                                 <select class="form-select form-select-sm" name="director" id="director" aria-label=".form-select-sm" required>
                                                     <option value="">Select Director</option>
                                                     <?php foreach ($directors as $director) : ?>
-                                                        <option value="<?php echo $director['id'] ?>" <?= ($director['name'] == $films[0]['name']) ? 'selected' : '' ?>><?php echo $director['name'] ?></option>
+                                                        <option value="<?php echo $director['id'] ?>" <?= ($director['name_director'] == $films[0]['name_director']) ? 'selected' : '' ?>><?php echo $director['name_director'] ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                             </div>
@@ -201,13 +205,13 @@ if (isset($_POST['edit'])) {
                             <div class="col">
                                 <div class="mb-3">
                                     <p class="text-center" class="form-label" for="synopsis">Synopsis</p>
-                                    <textarea class="form-control" id="synopsis" name="synopsis" rows="10" placeholder="synopsis..."><?php echo $films[0]['synopsis'] ?></textarea>
+                                    <textarea class="form-control" id="synopsis" name="synopsis" rows="12" placeholder="synopsis..." required><?php echo $films[0]['synopsis'] ?></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="d-grid gap-2 col-6 mx-auto">
-                                <button class="btn btn-primary" name="add" type="submit">Save</button>
+                                <button class="btn btn-primary" name="edit" type="submit">Save changes</button>
                             </div>
                             <div class="d-grid gap-2 col-6 mx-auto">
                                 <button class="btn btn-danger" type="reset">Reset</button>

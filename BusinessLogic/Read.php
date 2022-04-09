@@ -14,14 +14,14 @@ class Read extends Dabes
     {
         $query = $this->db->prepare("SELECT * FROM productions");
         $query->execute();
-        $data = $query->fetchAll();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
     public function showDirector()
     {
         $query = $this->db->prepare("SELECT * FROM directors");
         $query->execute();
-        $data = $query->fetchAll();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
     public function showTableFilm()
@@ -34,7 +34,7 @@ class Read extends Dabes
     }
     public function showFilms()
     {
-        $sql = "SELECT films.id_film, films.picture, films.title, genres_films.genre_name, productions.name_production, films.release_date, directors.name FROM films 
+        $sql = "SELECT films.id_film, films.picture, films.title, genres_films.genre_name, productions.name_production, films.release_date, directors.name_director FROM films 
                 INNER JOIN films_genres ON films.id_film = films_genres.film_id 
                 INNER JOIN films_productions ON films.id_film = films_productions.film_id
                 INNER JOIN films_directors ON films.id_film = films_directors.film_id
@@ -50,7 +50,7 @@ class Read extends Dabes
 
     public function searchFilm($search)
     {
-        $sql = "SELECT title, picture, release_date, runtime FROM films WHERE title LIKE '%$search%'";
+        $sql = "SELECT id_film, title, picture, release_date, runtime FROM films WHERE title LIKE '%$search%'";
         $query = $this->db->prepare($sql);
         $query->execute();
         $data = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -59,7 +59,7 @@ class Read extends Dabes
 
     public function showFilmsById($id)
     {
-        $sql = "SELECT films.id_film, films.picture, films.title, genres_films.genre_name, productions.name_production, films.release_date, films.synopsis, films.runtime, directors.name FROM films 
+        $sql = "SELECT films.id_film, films.picture, films.title, genres_films.genre_name, productions.name_production, films.release_date, films.synopsis, films.runtime, directors.name_director FROM films 
                 INNER JOIN films_genres ON films.id_film = films_genres.film_id 
                 INNER JOIN films_productions ON films.id_film = films_productions.film_id
                 INNER JOIN films_directors ON films.id_film = films_directors.film_id
@@ -67,6 +67,32 @@ class Read extends Dabes
                 INNER JOIN productions ON productions.id_production = films_productions.production_id
                 INNER JOIN directors ON directors.id = films_directors.directors_id
                 WHERE films.id_film = '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
+
+    public function showLimitFilm($firstData, $countPerPage)
+    {
+        $sql = "SELECT id_film, title, picture, release_date, runtime FROM films LIMIT $firstData, $countPerPage";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
+
+    public function showProductionById($id)
+    {
+        $sql = "SELECT * FROM productions WHERE id_production = $id";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
+    public function showDirectorById($id)
+    {
+        $sql = "SELECT * FROM directors WHERE id = $id";
         $query = $this->db->prepare($sql);
         $query->execute();
         $data = $query->fetchAll(PDO::FETCH_ASSOC);

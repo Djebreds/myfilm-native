@@ -11,6 +11,7 @@ $directors = $read->showDirector();
 $productions = $read->showProduction();
 $films = $read->showFilms();
 $genres = $read->showListGenres();
+$tableFilms = $read->showLimitFilm(0, 10);
 
 ?>
 <?php require 'header.php' ?>
@@ -98,7 +99,7 @@ $genres = $read->showListGenres();
         <div class="col-9">
             <div class="card mt-4 shadow  mb-2 bg-body rounded" style="max-width: 60rem;">
                 <div class="card-header">
-                    <a href="#" class="title-card">Table Films</a>
+                    <a href="#" class="title-card">Table Main</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-sm tabel   ">
@@ -118,7 +119,7 @@ $genres = $read->showListGenres();
                                 <td><?php echo $film['genre_name'] ?></td>
                                 <td><?php echo $film['name_production'] ?></td>
                                 <td><?php echo $film['release_date'] ?></td>
-                                <td><?php echo $film['name'] ?></td>
+                                <td><?php echo $film['name_director'] ?></td>
                             </tr>
                             <?php $a++ ?>
                         <?php endforeach ?>
@@ -126,8 +127,8 @@ $genres = $read->showListGenres();
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
-                    <div class="card mt-4 shadow  mb-2 bg-body rounded" style="max-width: 60rem;">
+                <div class="col-4">
+                    <div class="card mt-4 shadow  mb-2 bg-body rounded" style="max-width: 50rem;">
                         <div class="card-header">
                             <a href="#" class="title-card">Table Directors</a>
                         </div>
@@ -142,8 +143,8 @@ $genres = $read->showListGenres();
                                 <?php foreach ($directors as $director) : ?>
                                     <tr>
                                         <td><?php echo $a ?></td>
-                                        <td><?php echo $director['name'] ?></td>
-                                        <td><?php echo $director['about'] ?></td>
+                                        <td><?php echo $director['name_director'] ?></td>
+                                        <td><a href="">Detail</a></td>
                                     </tr>
                                     <?php $a++ ?>
                                 <?php endforeach ?>
@@ -151,22 +152,28 @@ $genres = $read->showListGenres();
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col">
                     <div class="card mt-4 shadow  mb-2 bg-body rounded" style="max-width: 60rem;">
                         <div class="card-header">
-                            <a href="#" class="title-card">Table Genres</a>
+                            <a href="#" class="title-card">Table Film</a>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered table-sm tabel   ">
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Genre List</th>
+                                    <th scope="col">Picture</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Duration</th>
+                                    <th scope="col">Release Date</th>
                                 </tr>
                                 <?php $a = 1 ?>
-                                <?php foreach ($genres as $genre) : ?>
+                                <?php foreach ($tableFilms as $tableFilm) : ?>
                                     <tr>
                                         <td><?php echo $a ?></td>
-                                        <td><?php echo $genre['genre_list'] ?></td>
+                                        <td><?php echo $tableFilm['picture'] ?></td>
+                                        <td><?php echo $tableFilm['title'] ?></td>
+                                        <td><?php echo $tableFilm['runtime'] ?></td>
+                                        <td><?php echo $tableFilm['release_date'] ?></td>
                                     </tr>
                                     <?php $a++ ?>
                                 <?php endforeach ?>
@@ -175,7 +182,6 @@ $genres = $read->showListGenres();
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="col-3">
             <div class="card mt-4 shadow  mb-2 bg-body rounded" style="max-width: 60rem;">
@@ -201,10 +207,30 @@ $genres = $read->showListGenres();
                     </table>
                 </div>
             </div>
+            <div class="col-auto">
+                <div class="card mt-4 shadow  mb-2 bg-body rounded" style="max-width: 60rem;">
+                    <div class="card-header">
+                        <a href="#" class="title-card">Table Genres</a>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-sm tabel   ">
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Genre List</th>
+                            </tr>
+                            <?php $a = 1 ?>
+                            <?php foreach ($genres as $genre) : ?>
+                                <tr>
+                                    <td><?php echo $a ?></td>
+                                    <td><?php echo $genre['genre_list'] ?></td>
+                                </tr>
+                                <?php $a++ ?>
+                            <?php endforeach ?>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row">
-
     </div>
 </div>
 

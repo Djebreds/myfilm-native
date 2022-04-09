@@ -11,4 +11,19 @@ class Delete extends Dabes
 
         return $query->rowCount();
     }
+    public function deleteProduction($id)
+    {
+        $sql = "DELETE FROM productions WHERE id_production = '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->rowCount();
+    }
+
+    public function deleteDirector($id)
+    {
+        $sql = "DELETE FROM directors WHERE id = '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->rowCount();
+    }
 }

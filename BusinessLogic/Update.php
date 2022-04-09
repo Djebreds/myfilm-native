@@ -45,4 +45,30 @@ class Update extends Dabes
 
         return $result;
     }
+
+    public function updateProduction($data)
+    {
+        $id_production = self::validate($data['id_production']);
+        $name_production = self::validate($data['name_production']);
+        $founded_date = self::validate($data['founded_date']);
+
+        $sql = "UPDATE productions SET name_production = '$name_production', founded_date = '$founded_date' WHERE id_production = '$id_production'";
+        $query = $this->db->prepare($sql);
+
+        $result = $query->execute();
+
+        return $result;
+    }
+    public function updateDirector($data)
+    {
+        $director_id = self::validate($data['id']);
+        $name_director = self::validate($data['name_director']);
+        $about_director = self::validate($data['about_director']);
+
+        $sql = "UPDATE directors SET name_director = '$name_director', about = '$about_director' WHERE id = $director_id";
+        $query = $this->db->prepare($sql);
+        $result = $query->execute();
+
+        return $result;
+    }
 }

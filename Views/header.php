@@ -166,6 +166,12 @@
             font-weight: 500;
         }
 
+        .delete_status .alert {
+            font-size: 12px;
+            height: 15%;
+            width: 500px;
+        }
+
 
         /* 
         table.table {
