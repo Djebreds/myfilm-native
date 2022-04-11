@@ -71,4 +71,15 @@ class Update extends Dabes
 
         return $result;
     }
+    public function updateGenrelist($data)
+    {
+        $id_list = self::validate($data['id_list']);
+        $genre_name = self::validate($data['genre_list']);
+
+        $sql = "UPDATE genre_list SET genre_list = '$genre_name' WHERE id_list = $id_list";
+        $query = $this->db->prepare($sql);
+        $result = $query->execute();
+
+        return $result;
+    }
 }

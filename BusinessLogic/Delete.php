@@ -26,4 +26,11 @@ class Delete extends Dabes
         $query->execute();
         return $query->rowCount();
     }
+    public function deleteGenreList($id)
+    {
+        $sql = "DELETE FROM genre_list WHERE id_list = '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->rowCount();
+    }
 }

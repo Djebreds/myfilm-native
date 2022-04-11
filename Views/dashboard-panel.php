@@ -1,5 +1,4 @@
 <?php
-
 require '../BusinessLogic/Dabes.php';
 require '../BusinessLogic/Read.php';
 require '../BusinessLogic/Create.php';
@@ -10,8 +9,13 @@ $genres = $read->showListGenres();
 $directors = $read->showDirector();
 $productions = $read->showProduction();
 $films = $read->showFilms();
-$genres = $read->showListGenres();
+
+$tableMain = $read->showLimitMain(0, 10);
 $tableFilms = $read->showLimitFilm(0, 10);
+$tableGenres = $read->showLimitGenre(0, 10);
+$tableProductons = $read->showLimitProduction(0, 10);
+$tableDirectors = $read->showLimitDirector(0, 10);
+
 
 ?>
 <?php require 'header.php' ?>
@@ -25,7 +29,7 @@ $tableFilms = $read->showLimitFilm(0, 10);
                         <div class="col-9">
                             <div class="status-film">
                                 <h6 class="card-title count">COUNT DATA FILMS</h6>
-                                <p class="status">123 Films</p>
+                                <p class="status"><?php echo count($films) ?> Films</p>
                             </div>
                         </div>
                         <div class="col-3">
@@ -44,7 +48,7 @@ $tableFilms = $read->showLimitFilm(0, 10);
                         <div class="col-9">
                             <div class="status-film">
                                 <h6 class="card-title count">COUNT DATA GENRES</h6>
-                                <p class="status">40 Genres</p>
+                                <p class="status"><?php echo count($genres) ?> Genres</p>
                             </div>
                         </div>
                         <div class="col-3">
@@ -63,7 +67,7 @@ $tableFilms = $read->showLimitFilm(0, 10);
                         <div class="col-9">
                             <div class="status-film">
                                 <h6 class="card-title count">COUNT DATA PRODUCTIONS</h6>
-                                <p class="status">25 Productions</p>
+                                <p class="status"><?php echo count($productions) ?> Productions</p>
                             </div>
                         </div>
                         <div class="col-3">
@@ -82,7 +86,7 @@ $tableFilms = $read->showLimitFilm(0, 10);
                         <div class="col-9">
                             <div class="status-film">
                                 <h6 class="card-title count">COUNT DATA DIRECTORS</h6>
-                                <p class="status">31 Films</p>
+                                <p class="status"><?php echo count($directors) ?> Directors</p>
                             </div>
                         </div>
                         <div class="col-3">
@@ -99,7 +103,7 @@ $tableFilms = $read->showLimitFilm(0, 10);
         <div class="col-9">
             <div class="card mt-4 shadow  mb-2 bg-body rounded" style="max-width: 60rem;">
                 <div class="card-header">
-                    <a href="#" class="title-card">Table Main</a>
+                    <a href="maintable-panel.php" class="title-card">Table Main</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-sm tabel   ">
@@ -112,7 +116,7 @@ $tableFilms = $read->showLimitFilm(0, 10);
                             <th scope="col">Director</th>
                         </tr>
                         <?php $a = 1 ?>
-                        <?php foreach ($films as $film) : ?>
+                        <?php foreach ($tableMain as $film) : ?>
                             <tr>
                                 <td><?php echo $a ?></td>
                                 <td><?php echo $film['title'] ?></td>
@@ -127,24 +131,24 @@ $tableFilms = $read->showLimitFilm(0, 10);
                 </div>
             </div>
             <div class="row">
-                <div class="col-4">
-                    <div class="card mt-4 shadow  mb-2 bg-body rounded" style="max-width: 50rem;">
+                <div class="col-5">
+                    <div class="card mt-4 shadow  mb-2 bg-body rounded" style="max-width: 60rem;">
                         <div class="card-header">
-                            <a href="#" class="title-card">Table Directors</a>
+                            <a href="productiontable-panel.php" class="title-card">Table Productions</a>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered table-sm tabel   ">
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Name </th>
-                                    <th scope="col">About</th>
+                                    <th scope="col">Name Company</th>
+                                    <th scope="col">Founded Date</th>
                                 </tr>
                                 <?php $a = 1 ?>
-                                <?php foreach ($directors as $director) : ?>
+                                <?php foreach ($tableProductons as $production) : ?>
                                     <tr>
                                         <td><?php echo $a ?></td>
-                                        <td><?php echo $director['name_director'] ?></td>
-                                        <td><a href="">Detail</a></td>
+                                        <td><?php echo $production['name_production'] ?></td>
+                                        <td><?php echo $production['founded_date'] ?></td>
                                     </tr>
                                     <?php $a++ ?>
                                 <?php endforeach ?>
@@ -155,7 +159,7 @@ $tableFilms = $read->showLimitFilm(0, 10);
                 <div class="col">
                     <div class="card mt-4 shadow  mb-2 bg-body rounded" style="max-width: 60rem;">
                         <div class="card-header">
-                            <a href="#" class="title-card">Table Film</a>
+                            <a href="filmtable-panel.php" class="title-card">Table Film</a>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered table-sm tabel   ">
@@ -186,21 +190,21 @@ $tableFilms = $read->showLimitFilm(0, 10);
         <div class="col-3">
             <div class="card mt-4 shadow  mb-2 bg-body rounded" style="max-width: 60rem;">
                 <div class="card-header">
-                    <a href="#" class="title-card">Table Productions</a>
+                    <a href="directortable-panel.php" class="title-card">Table Directors</a>
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered table-sm tabel   ">
+                    <table class="table table-bordered table-sm tabel">
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">Name Company</th>
-                            <th scope="col">Founded Date</th>
+                            <th scope="col">Name </th>
+                            <th scope="col">About</th>
                         </tr>
                         <?php $a = 1 ?>
-                        <?php foreach ($productions as $production) : ?>
+                        <?php foreach ($tableDirectors as $director) : ?>
                             <tr>
                                 <td><?php echo $a ?></td>
-                                <td><?php echo $production['name_production'] ?></td>
-                                <td><?php echo $production['founded_date'] ?></td>
+                                <td><?php echo $director['name_director'] ?></td>
+                                <td><a href="director-detail.php?id=<?php echo $director['id'] ?>">Detail</a></td>
                             </tr>
                             <?php $a++ ?>
                         <?php endforeach ?>
@@ -210,7 +214,7 @@ $tableFilms = $read->showLimitFilm(0, 10);
             <div class="col-auto">
                 <div class="card mt-4 shadow  mb-2 bg-body rounded" style="max-width: 60rem;">
                     <div class="card-header">
-                        <a href="#" class="title-card">Table Genres</a>
+                        <a href="genretable-panel.php" class="title-card">Table Genres</a>
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered table-sm tabel   ">
@@ -219,7 +223,7 @@ $tableFilms = $read->showLimitFilm(0, 10);
                                 <th scope="col">Genre List</th>
                             </tr>
                             <?php $a = 1 ?>
-                            <?php foreach ($genres as $genre) : ?>
+                            <?php foreach ($tableGenres as $genre) : ?>
                                 <tr>
                                     <td><?php echo $a ?></td>
                                     <td><?php echo $genre['genre_list'] ?></td>

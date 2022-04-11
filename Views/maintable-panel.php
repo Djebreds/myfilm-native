@@ -1,6 +1,4 @@
 <?php
-
-
 require '../BusinessLogic/Dabes.php';
 require '../BusinessLogic/Read.php';
 require '../BusinessLogic/Create.php';
@@ -9,6 +7,17 @@ $read = new Read();
 
 $films = $read->showFilms();
 
+$countPerPage = 10;
+$countData = count($read->showFilms());
+$countPage = ceil($countData / $countPerPage);
+$activePage = (isset($_GET['page']) ? $_GET['page'] : 1);
+$firstData = ($countPerPage * $activePage) - $countPerPage;
+
+$films = $read->showLimitMain($firstData, $countPerPage);
+
+if (isset($_POST['searchButton'])) {
+    $films = $read->searchMain($_POST['searchInput']);
+}
 
 
 ?>
@@ -84,29 +93,62 @@ $films = $read->showFilms();
                 <th scope="col">Director</th>
                 <th scope="col">Action</th>
             </tr>
-            <?php $a = 1 ?>
+            <?php $a = $firstData + 1 ?>
             <?php foreach ($films as $film) : ?>
                 <?php
-                $Date = $film['release_date'];
-                $release = date("d-m-Y", strtotime($Date));
+                $date = $film['release_date'];
+                $release = date("d-m-Y", strtotime($date));
                 ?>
                 <tr>
                     <td><?php echo $a ?></td>
                     <td><?php echo $film['title'] ?></td>
                     <td><?php echo $film['genre_name'] ?></td>
                     <td><?php echo $film['name_production'] ?></td>
-                    <td><?php echo $film['release_date'] ?></td>
+                    <td><?php echo $release ?></td>
                     <td><?php echo $film['name_director'] ?></td>
                     <td>
-                        <a href="" class=" btn btn-success btn-sm text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Views detail data"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 18 18">
+                        <a href="detail-film.php?id_film=<?php echo $film['id_film'] ?>" class=" btn btn-success btn-sm text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Views detail data"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 18 18">
                                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
                                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
                             </svg></a>
-
                 </tr>
                 <?php $a++ ?>
             <?php endforeach ?>
         </table>
+        <nav aria-label="...">
+            <ul class="pagination pagination-sm">
+                <?php if ($activePage > 1) : ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?= $activePage - 1; ?>">Previous</a>
+                    </li>
+                <?php else : ?>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="?page=<?= $activePage - 1; ?>">Previous</a>
+                    </li>
+                <?php endif; ?>
+                <?php for ($i = 1; $i <= $countPage; $i++) : ?>
+                    <?php if ($i == $activePage) : ?>
+                        <li class="page-item active">
+                            <a class="page-link " href="?page=<?php echo $i ?>"><?php echo $i ?></a>
+                        </li>
+                    <?php else : ?>
+                        <li class="page-item">
+                            <a class="page-link " href="?page=<?php echo $i ?>"><?php echo $i ?></a>
+                        </li>
+                    <?php endif; ?>
+
+                <?php endfor; ?>
+                <?php if ($activePage < $countPage) : ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?= $activePage + 1; ?>">Next</a>
+                    </li>
+                <?php else : ?>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="?page=<?= $activePage + 1; ?>">Next</a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </nav>
     </div>
 </div>
 <?php require 'footer.php' ?>

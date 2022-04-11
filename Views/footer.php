@@ -1,9 +1,6 @@
-<div class="card mt-4 border border-4 border-end-0 border-top-0 border-bottom-0 border-primary shadow  mb-2 bg-body rounded footer">
-    <div class="card-header">
-        Tabel ini
-    </div>
-    <div class="card-body ">
-        <p class="text-center">Copyright © Refi Ahmad Fauzan 2022</p>
+<div class="card mt-4 shadow  mb-2 bg-body rounded footer">
+    <div class="card-body">
+        <p class="text-center text-secondary">Copyright © Refi Ahmad Fauzan 2022</p>
     </div>
 </div>
 </div>

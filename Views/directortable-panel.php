@@ -5,6 +5,19 @@ require '../BusinessLogic/Read.php';
 $read = new Read();
 $directors = $read->showDirector();
 
+
+$countPerPage = 10;
+$countData = count($read->showDirector());
+$countPage = ceil($countData / $countPerPage);
+$activePage = (isset($_GET['page']) ? $_GET['page'] : 1);
+$firstData = ($countPerPage * $activePage) - $countPerPage;
+
+$directors = $read->showLimitDirector($firstData, $countPerPage);
+
+if (isset($_POST['searchButton'])) {
+    $directors = $read->searchDirector($_POST['searchInput']);
+}
+
 ?>
 <?php require 'header.php' ?>
 <h2>Director Table</h2>
@@ -66,13 +79,13 @@ $directors = $read->showDirector();
                 <th scope="col">Name </th>
                 <th scope="col">Action</th>
             </tr>
-            <?php $a = 1 ?>
+            <?php $a = $firstData + 1 ?>
             <?php foreach ($directors as $director) : ?>
                 <tr>
                     <td><?php echo $a ?></td>
                     <td><?php echo $director['name_director'] ?></td>
                     <td>
-                        <a href="" class=" btn btn-success btn-sm text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Views detail data"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 18 18">
+                        <a href="director-detail.php?id=<?php echo $director['id'] ?>" class=" btn btn-success btn-sm text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Views detail data"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 18 18">
                                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
                                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
                             </svg></a>
@@ -146,7 +159,40 @@ $directors = $read->showDirector();
                 <?php $a++ ?>
             <?php endforeach ?>
         </table>
+        <nav aria-label="...">
+            <ul class="pagination pagination-sm">
+                <?php if ($activePage > 1) : ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?= $activePage - 1; ?>">Previous</a>
+                    </li>
+                <?php else : ?>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="?page=<?= $activePage - 1; ?>">Previous</a>
+                    </li>
+                <?php endif; ?>
+                <?php for ($i = 1; $i <= $countPage; $i++) : ?>
+                    <?php if ($i == $activePage) : ?>
+                        <li class="page-item active">
+                            <a class="page-link " href="?page=<?php echo $i ?>"><?php echo $i ?></a>
+                        </li>
+                    <?php else : ?>
+                        <li class="page-item">
+                            <a class="page-link " href="?page=<?php echo $i ?>"><?php echo $i ?></a>
+                        </li>
+                    <?php endif; ?>
 
+                <?php endfor; ?>
+                <?php if ($activePage < $countPage) : ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?= $activePage + 1; ?>">Next</a>
+                    </li>
+                <?php else : ?>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="?page=<?= $activePage + 1; ?>">Next</a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </nav>
     </div>
 </div>
 

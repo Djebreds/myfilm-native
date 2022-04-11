@@ -1,54 +1,58 @@
 <?php
-session_start();
-
 require '../BusinessLogic/Dabes.php';
 require '../BusinessLogic/Read.php';
 $Dabes = new Dabes();
-$Read = new Read();
-$username = $password = "";
-$usernameErr = $passErr = "";
+
+$username = $password = $email = $verify_password = "";
+$usernameErr = $emailErr = $passErr = $verfiyErr = "";
 $error = "";
 $message = "";
+$errorData = "";
 
-if (isset($_SESSION['login'])) {
-    header('Location: dashboard-panel.php');
-    exit();
-}
+$no_error = "";
 
-if (isset($_POST['login'])) {
+if (isset($_POST['register'])) {
     $username = $_POST['username'];
+    $email = $_POST['email'];
     $password = $_POST['password'];
+    $verify_password = $_POST['verify_password'];
 
     if (!preg_match("/^[a-zA-Z' ]*$/", $username)) {
         $error = true;
         $usernameErr = "<div class='invalid'>
                                 Only letters and white space allowed
                             </div>";
-    }
-    if ($Dabes->checkUsername($username) === 1) {
-        $result = $Read->showAdmin($username);
-        if (password_verify($password, $result[0]['password'])) {
-            $_SESSION['login'] = true;
-            $_SESSION['username'] = $result[0]['username'];
-            $_SESSION['email'] = $result[0]['email'];
-            $_SESSION['created_at'] = $result[0]['created_at'];
-
-            header('Location: dashboard-panel.php');
-            exit;
-        } else {
-            $error = true;
-            $message = "<div class='alert alert-danger error' role='alert'>
-                            Password do not match! Input your correct password.
-                        </div>";
-        }
-    } else {
+        $no_error = 0;
+    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = true;
-        $message = "<div class='alert alert-danger error' role='alert'>
-                            Username not registered. Click <a href='sign-admin.php' class='alert-link'>here</a> to register.
+        $emailErr = "<div class='invalid'>
+                                Invalid email format!
+                            </div>";
+        $no_error = 0;
+    } else if ($password != $verify_password) {
+        $error = true;
+        $verfiyErr =  "<div class='invalid'>
+                            Password doesn't match!
                         </div>";
+        $passErr =  "<div class='invalid'>
+                            Make sure your password has the correct input!
+                        </div>";
+        $no_error = 0;
+    } else if ($Dabes->checkUsername($username) > 0) {
+        $errorData = true;
+        $message = "<div class='alert alert-danger' role='alert'>
+                            Username has already taken! Choose another username.
+                        </div>";
+        $no_error = 0;
+    } else {
+        if ($Dabes->register($_POST) > 0) {
+            $errorData = false;
+            $message = "<div class='alert alert-success' role='alert'>
+                                You has registered. Click <a href='login-admin.php' class='alert-link'>here</a> to login.
+                            </div>";
+        }
     }
 }
-
 
 
 
@@ -115,7 +119,7 @@ if (isset($_POST['login'])) {
             position: absolute;
             z-index: -3;
             left: 60%;
-            top: 50px;
+            top: 100px;
             width: 40%;
             transform: rotate(15deg) scaleX(-1);
         }
@@ -151,13 +155,6 @@ if (isset($_POST['login'])) {
             margin: 2px;
             color: #f23838;
         }
-
-        .error {
-            margin: 5px;
-            padding: 15px;
-            height: 50px;
-            font-size: 13px;
-        }
     </style>
 
 <body>
@@ -168,12 +165,11 @@ if (isset($_POST['login'])) {
                 <div class="card-body m-4">
                     <div class="row">
                         <div class="col-7">
-                            <?php if ($error == true) {
+                            <?php if ($errorData == true) {
                                 echo $message;
                             } else {
                                 echo $message;
                             } ?>
-
                             <form action="" method="POST">
                                 <div class="mb-2">
                                     <label for="username" class="form-label">Username</label>
@@ -183,17 +179,35 @@ if (isset($_POST['login'])) {
                                     } ?>
                                 </div>
                                 <div class="mb-2">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control form-control-sm rounded-pill" name="password" id="password" required>
+                                    <label for="Email1" class="form-label">Email address</label>
+                                    <input type="text" class="form-control form-control-sm rounded-pill" name="email" id="Email1" aria-describedby="emailHelp" value="<?php echo $email ?>" required>
+                                    <?php if ($error == true) {
+                                        echo $emailErr;
+                                    } ?>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="Password" class="form-label">Password</label>
+                                    <input type="password" class="form-control form-control-sm rounded-pill" name="password" id="Password" value="<?php echo $password ?>" required>
+                                    <?php if ($error == true) {
+                                        echo $passErr;
+                                    } ?>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="VerifyPassword" class="form-label">Verify Password</label>
+                                    <input type="password" class="form-control form-control-sm rounded-pill" name="verify_password" id="VerifyPassword" value="<?php echo $verify_password ?>" required>
+                                    <?php if ($error == true) {
+                                        echo $verfiyErr;
+                                    } ?>
                                 </div>
                                 <div class="ms-4 mt-4">
-                                    <button type="submit" class="btn btn-primary shadow register" name="login">Login</button>
-                                    <button type="button" class="btn btn-primary shadow ms-2 login" name="register" onclick="window.location.href = 'sign-admin.php'">Register</button>
+                                    <button type="submit" class="btn btn-primary shadow register" name="register">Register</button>
+                                    <button type="button" class="btn btn-primary shadow ms-2 login" name="login" onclick="window.location.href = 'login-admin.php'">Login</button>
                                 </div>
                             </form>
                         </div>
                         <div class="col-5 intro">
-                            <h4 class="text-center">Here we go again!</h4>
+                            <h5 class="text-center">Welcome!</h5>
+                            <h4 class="text-center">Here to get started</h4>
                         </div>
                     </div>
                 </div>

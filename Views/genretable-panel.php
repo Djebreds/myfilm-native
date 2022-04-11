@@ -5,6 +5,18 @@ require '../BusinessLogic/Read.php';
 $read = new Read();
 $genres = $read->showListGenres();
 
+$countPerPage = 10;
+$countData = count($read->showListGenres());
+$countPage = ceil($countData / $countPerPage);
+$activePage = (isset($_GET['page']) ? $_GET['page'] : 1);
+$firstData = ($countPerPage * $activePage) - $countPerPage;
+
+$genres = $read->showLimitGenre($firstData, $countPerPage);
+
+if (isset($_POST['searchButton'])) {
+    $genres = $read->searchGenre($_POST['searchInput']);
+}
+
 ?>
 <?php require 'header.php' ?>
 <h2>Genre Table</h2>
@@ -27,7 +39,7 @@ $genres = $read->showListGenres();
                                 <use xlink:href='#check-circle-fill' />
                             </svg>
                             <div>
-                                Film successfuly deleted <span class="ms-3"><b>note: Deleted data cannot recovery!</b></span>
+                                Genre successfuly deleted <span class="ms-3"><b>note: Deleted data cannot recovery!</b></span>
                             </div>
                             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                         </div>
@@ -44,7 +56,7 @@ $genres = $read->showListGenres();
                                 <use xlink:href='#check-circle-fill' />
                             </svg>
                             <div>
-                                <b>Have some trouble<b>. Failed to delete this film
+                                <b>Have some trouble<b>. Failed to delete this genre list
                             </div>
                             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                         </div>
@@ -66,7 +78,7 @@ $genres = $read->showListGenres();
                 <th scope="col">Genre List</th>
                 <th scope="col">Action</th>
             </tr>
-            <?php $a = 1 ?>
+            <?php $a = $firstData + 1 ?>
             <?php foreach ($genres as $genre) : ?>
                 <tr>
                     <td><?php echo $a ?></td>
@@ -89,7 +101,7 @@ $genres = $read->showListGenres();
                                     <li>
                                         <div class="row mx-auto">
                                             <div class="col-5 ">
-                                                <a href="delete-film.php?id_film=<?php echo $film['id_film'] ?>" class="dropdown-item text-center text-danger px-2">Yes</a>
+                                                <a href="update-genre.php?id_list=<?php echo $genre['id_list'] ?>" class="dropdown-item text-center text-danger px-2">Yes</a>
                                             </div>
                                             <div class="col-auto">
                                                 <div class="d-flex" style="height: 25px;">
@@ -122,7 +134,7 @@ $genres = $read->showListGenres();
                                     <li>
                                         <div class="row mx-auto">
                                             <div class="col-5 ">
-                                                <a href="delete-film.php?id_film=<?php echo $film['id_film'] ?>" class="dropdown-item text-center text-danger px-2">Yes</a>
+                                                <a href="delete-genre.php?id_list=<?php echo $genre['id_list'] ?>" class="dropdown-item text-center text-danger px-2">Yes</a>
                                             </div>
                                             <div class="col-auto">
                                                 <div class="d-flex" style="height: 25px;">
@@ -142,6 +154,40 @@ $genres = $read->showListGenres();
                 <?php $a++ ?>
             <?php endforeach ?>
         </table>
+        <nav aria-label="...">
+            <ul class="pagination pagination-sm">
+                <?php if ($activePage > 1) : ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?= $activePage - 1; ?>">Previous</a>
+                    </li>
+                <?php else : ?>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="?page=<?= $activePage - 1; ?>">Previous</a>
+                    </li>
+                <?php endif; ?>
+                <?php for ($i = 1; $i <= $countPage; $i++) : ?>
+                    <?php if ($i == $activePage) : ?>
+                        <li class="page-item active">
+                            <a class="page-link " href="?page=<?php echo $i ?>"><?php echo $i ?></a>
+                        </li>
+                    <?php else : ?>
+                        <li class="page-item">
+                            <a class="page-link " href="?page=<?php echo $i ?>"><?php echo $i ?></a>
+                        </li>
+                    <?php endif; ?>
+
+                <?php endfor; ?>
+                <?php if ($activePage < $countPage) : ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?= $activePage + 1; ?>">Next</a>
+                    </li>
+                <?php else : ?>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="?page=<?= $activePage + 1; ?>">Next</a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </nav>
     </div>
 </div>
 <?php require 'footer.php' ?>

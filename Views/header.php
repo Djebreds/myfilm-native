@@ -1,3 +1,18 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['login'])) {
+    header('Location: login-admin.php');
+    exit();
+} else {
+    $username = $_SESSION['username'];
+    $email = $_SESSION['email'];
+    $created_at = $_SESSION['created_at'];
+}
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +27,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="main.css">
     <title>Document</title>
 
     <style>
@@ -27,7 +41,7 @@
             height: 100%;
             width: 16%;
             position: fixed;
-            z-index: 1;
+            z-index: 100;
             top: 0;
             left: 0;
             background-image: linear-gradient(to right bottom, #4e73df, #496dd8, #4468d1, #3f62cb, #3a5dc4);
@@ -37,7 +51,7 @@
             overflow: visible;
         }
 
-        .sidenav a {
+        .sidenav .logo {
             text-decoration: none;
             font-size: 20px;
             padding: 8px 8px 8px 20px;
@@ -172,6 +186,58 @@
             width: 500px;
         }
 
+        .image-detail {
+            max-width: 250px;
+            margin-left: 30px;
+        }
+
+        .header-detail p {
+            margin: 1px;
+            color: #787878;
+            font-size: 13px;
+        }
+
+        .header-detail h4 {
+            color: #0d6efd;
+            font: 15px;
+            font-weight: 600;
+        }
+
+        .header-detail .header-item {
+            color: #0d6efd;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .header-title {
+            font-size: 25px;
+            font-weight: 600;
+            color: #0d6efd;
+        }
+
+        hr.haer {
+            color: #696969;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            padding: 0px;
+            border-top: 1px solid;
+            width: 250px;
+        }
+
+        .header-about {
+            font-size: 13px;
+            color: #787878;
+
+        }
+
+        .info-header {
+            color: #787878;
+        }
+
+        .item-info {
+            font-weight: 600;
+            color: #0d6efd;
+        }
 
         /* 
         table.table {
@@ -277,20 +343,19 @@
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 20 20">
                                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                            </svg> Dadang Jebred
+                            </svg> <?php echo $username ?>
                         </button>
                         <ul class="dropdown-menu">
                             <!-- Dropdown menu links -->
-                            <li><button class="dropdown-item" name="info" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 20 20">
+                            <li><a href="info-panel.php" class="dropdown-item link-primary" name="info"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 20 20">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                                         <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
-                                    </svg> Info </button></li>
+                                    </svg> Info </a></li>
                             <hr class="hr">
-
-                            <li><button class="dropdown-item" name="logout" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 20 20">
+                            <li><a href="logout.php" class="dropdown-item link-danger" name="logout"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z" />
                                         <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
-                                    </svg> Logout </button></li>
+                                    </svg> Logout </a></li>
                         </ul>
                     </div>
                 </div>

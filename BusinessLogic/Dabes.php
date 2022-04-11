@@ -57,4 +57,27 @@ class Dabes
         $data = htmlspecialchars($data);
         return $data;
     }
+    public function register($data)
+    {
+        $username = self::validate(ucwords($data['username']));
+        $email = self::validate(strtolower($data['email']));
+        $password = htmlspecialchars($data['password']);
+
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "INSERT INTO admin (email, username, password) VALUES ('$email', '$username', '$password')";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+
+        return $query->rowCount();
+    }
+
+    public function checkUsername($data)
+    {
+        $username = self::validate($data);
+        $sql = "SELECT username FROM admin WHERE username = '$username'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+
+        return $query->rowCount();
+    }
 }

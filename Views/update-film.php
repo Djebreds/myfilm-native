@@ -98,7 +98,7 @@ if (isset($_POST['edit'])) {
                             <div class="col-3">
                                 <div class="mb-3 pt-2">
                                     <p class="form-label form-label-sm text-center">Upload poster</p>
-                                    <input class="form-control form-control-sm" id="formFileSm" name="picture" type="file" onchange="readURL(this);" required>
+                                    <input class="form-control form-control-sm" id="formFileSm" name="picture" type="file" onchange="readURL(this);">
                                 </div>
                             </div>
                         </div>
