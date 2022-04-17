@@ -31,6 +31,7 @@ $results = $read->searchMain($searching);
             </div>
             <div class="col-10">
                 <div class="row g-0">
+                    <h5 class="mb-4">Result for <b>"<?php echo $searching ?>"</b></h5>
                     <?php if ($results == []) { ?>
                         <div class="alert alert-danger d-flex align-items-center" role="alert">
                             <div class="row justify-content-center mx-auto">
