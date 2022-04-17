@@ -11,7 +11,7 @@ $message = "";
 $genres = $read->showListGenres();
 
 if (isset($_POST['add'])) {
-    if ($create->addGenre_ist($_POST) > 0) {
+    if ($create->addGenre_list($_POST) > 0) {
         $error = false;
         $message = " <svg xmlns='http://www.w3.org/2000/svg' style='display: none;'>
                         <symbol id='check-circle-fill' fill='currentColor' viewBox='0 0 16 16'>
@@ -52,7 +52,7 @@ if (isset($_POST['add'])) {
 <div class="row">
     <div class="col">
         <div class="card mt-4 border border-4 border-end-0 border-top-1 border-bottom-0 border-start-0 border-success shadow  mb-2 bg-body rounded mx-auto" style="width: 70rem;">
-            <div class="card-header">
+            <div class="card-header text-primary fw-bold">
                 Genre
             </div>
             <div class="card-body">

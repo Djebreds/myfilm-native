@@ -162,7 +162,7 @@ if (isset($_POST['login'])) {
 
 <body>
     <div class="container">
-        <h2 class="mb-4 mt-4 text-center">Register</h2>
+        <h2 class="mb-4 mt-4 text-center">Login</h2>
         <div class="row g-0 justify-content-center">
             <div class="card shadow  bg-body mt-4" style="width: 45rem;">
                 <div class="card-body m-4">

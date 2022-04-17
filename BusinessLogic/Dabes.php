@@ -2,15 +2,16 @@
 
 class Dabes
 {
+    // connection database
     public function __construct()
     {
-        // connection database
+        // base connection
         $db_user = "root";
         $db_pass = "root";
         $db_host = "localhost";
         $db_name = "Films";
 
-        // check the connection
+        // check and try the connection
         try {
             $this->db = new PDO("mysql:host={$db_host}; dbname={$db_name}", $db_user, $db_pass);
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -19,6 +20,7 @@ class Dabes
         }
     }
 
+    // function to upload picture
     public function uploadFilm()
     {
         $name = $_FILES['picture']['name'];
@@ -30,6 +32,8 @@ class Dabes
             echo "choose the picture first";
             return false;
         }
+
+        // extension valid
         $extension_valid = ['png', 'jpg', 'jpeg'];
         $extension = pathinfo($name, PATHINFO_EXTENSION);
         $extension = strtolower($extension);
@@ -38,10 +42,12 @@ class Dabes
             echo "the picture must be [png, jpg or jpeg]";
             return false;
         }
-        if ($size > 3000000) {
+
+        if ($size > 2000000) {
             echo "the picture size to big";
         }
 
+        // change name picture into random number  
         $namePicture = uniqid();
         $namePicture .= ".";
         $namePicture .= $extension;
@@ -50,6 +56,19 @@ class Dabes
 
         return $namePicture;
     }
+
+    // function to resize image while uploading 
+    public function resizeImage($resourceType, $image_width, $image_height)
+    {
+        $resizeWidth = 400;
+        $resizeHeight = 600;
+        $iamgeLayer = imagecreatetruecolor($resizeWidth, $resizeHeight);
+        imagecopyresampled($iamgeLayer, $resourceType, 0, 0, 0, 0, $resizeWidth, $resizeHeight, $image_width, $image_height);
+        return $iamgeLayer;
+    }
+
+
+    // function to make validate data
     public function validate($data)
     {
         $data = trim($data);
@@ -57,12 +76,15 @@ class Dabes
         $data = htmlspecialchars($data);
         return $data;
     }
+
+    // function to add user admin 
     public function register($data)
     {
         $username = self::validate(ucwords($data['username']));
         $email = self::validate(strtolower($data['email']));
-        $password = htmlspecialchars($data['password']);
+        $password = self::validate(htmlspecialchars($data['password']));
 
+        // encriypt the password
         $password = password_hash($password, PASSWORD_DEFAULT);
         $sql = "INSERT INTO admin (email, username, password) VALUES ('$email', '$username', '$password')";
         $query = $this->db->prepare($sql);
@@ -71,6 +93,7 @@ class Dabes
         return $query->rowCount();
     }
 
+    // check if username has registered on database
     public function checkUsername($data)
     {
         $username = self::validate($data);

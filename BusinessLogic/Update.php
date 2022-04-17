@@ -2,6 +2,7 @@
 
 class Update extends Dabes
 {
+    // update film
     public function updateFilm($data)
     {
         // select the newest data from films
@@ -13,9 +14,32 @@ class Update extends Dabes
         $runtime = self::validate($data['runtime']);
         $production = self::validate($data['production']); // id na
         $director = self::validate($data['director']); // id na
-        $merge_genre = implode(", ", $genres);
-        $oldPicture = $data['oldPicture'];
+        $trailer = self::validate($data['trailer']);
 
+        // check if the trailer is from youtube then add embed if thats true
+        $valid_trailer = $trailer;
+        $tr = explode('/', $trailer);
+        if ($tr[2] != 'www.youtube.com' && $tr[2] != 'youtu.be') {
+            return 0;
+        } else {
+            if (in_array('embed', $tr)) {
+                $valid_trailer = $trailer;
+            } else {
+                if ($tr[2] == 'www.youtube.com') {
+                    $exp = explode('watch?v=', $trailer);
+                    $valid_trailer = $exp[0] . "/embed/" . $exp[1];
+                } else if ($tr[2] == 'youtu.be') {
+                    $valid_trailer = "https://www.youtube.com" . "/embed/" . $tr[3];
+                }
+            }
+        }
+
+
+        // mergering genre 
+        $merge_genre = implode(", ", $genres);
+
+        // check if user no upload the picture
+        $oldPicture = $data['oldPicture'];
 
         if ($_FILES['picture']['error'] === 4) {
             $picture = $oldPicture;
@@ -23,22 +47,31 @@ class Update extends Dabes
             $picture = self::uploadFilm();
         }
 
+        // update data from table genre_films and film_genre
         $sql = "UPDATE genres_films, films_genres SET genres_films.genre_name = '$merge_genre' WHERE films_genres.genre_id = genres_films.genre_id AND films_genres.film_id = '$id_film'";
         $query = $this->db->prepare($sql);
         $genre_count = $query->execute();
 
+        // update data from table film director and directors
         $sql = "UPDATE films_directors, directors SET films_directors.directors_id = '$director' WHERE films_directors.directors_id = directors.id AND films_directors.film_id = '$id_film'";
         $query = $this->db->prepare($sql);
         $director_count = $query->execute();
 
-
+        // update data from table film director and productions
         $sql = "UPDATE films_productions, productions SET films_productions.production_id = '$production' WHERE films_productions.production_id = productions.id_production AND films_productions.film_id = '$id_film'";
         $query = $this->db->prepare($sql);
         $production_count = $query->execute();
 
 
-        $sql = "UPDATE films SET title = '$title', release_date = '$release_date', picture = '$picture', synopsis = '$synopsis', runtime = '$runtime' WHERE id_film = '$id_film'";
+        // update data from table films with id
+        $sql = "UPDATE films SET title = :title , release_date = :release_date , picture = :picture, synopsis = :synopsis, runtime = :runtime, trailer = :trailer WHERE id_film = '$id_film'";
         $query = $this->db->prepare($sql);
+        $query->bindParam(':title', $title);
+        $query->bindParam(':synopsis', $synopsis);
+        $query->bindParam(':release_date', $release_date);
+        $query->bindParam(':picture', $picture);
+        $query->bindParam(':runtime', $runtime);
+        $query->bindParam(':trailer', $valid_trailer);
         $film_count = $query->execute();
 
         $result = $genre_count + $director_count + $production_count + $film_count;
@@ -46,6 +79,7 @@ class Update extends Dabes
         return $result;
     }
 
+    // update data from production table
     public function updateProduction($data)
     {
         $id_production = self::validate($data['id_production']);
@@ -59,6 +93,8 @@ class Update extends Dabes
 
         return $result;
     }
+
+    // update data from director table
     public function updateDirector($data)
     {
         $director_id = self::validate($data['id']);
@@ -71,6 +107,8 @@ class Update extends Dabes
 
         return $result;
     }
+
+    // update data from genre list table
     public function updateGenrelist($data)
     {
         $id_list = self::validate($data['id_list']);

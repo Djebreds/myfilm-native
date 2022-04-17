@@ -49,11 +49,11 @@ if (isset($_POST['edit'])) {
 
 ?>
 <?php require 'header.php' ?>
-<h2>Add data production</h2>
+<h2>Update data production</h2>
 <div class="row">
     <div class="col">
         <div class="card mt-4 border border-4 border-end-0 border-top-1 border-bottom-0 border-start-0 border-warning shadow  mb-2 bg-body rounded mx-auto" style="width: 70rem;">
-            <div class="card-header">
+            <div class="card-header text-primary fw-bold">
                 Production
             </div>
             <div class="card-body">

@@ -18,9 +18,13 @@
                 </nav>
             </div>
             <div class="col-md-10">
-                <div class="card">
+                <div class="card mt-4">
                     <div class="card-body">
-                        <p>This page created by Refi Ahmad Fauzan</p>
+                        <div class="about">
+                            <p class="text-center mt-4">This page created by Refi Ahmad Fauzan</p>
+                            <p class="text-center">The technology used is PHP Native, HTML, CSS and Bootstrap 5</p>
+                            <p class="text-center mb-4">Created on 4 April 2022</p>
+                        </div>
                     </div>
                 </div>
             </div>

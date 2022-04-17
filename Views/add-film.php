@@ -2,7 +2,7 @@
 require '../BusinessLogic/Dabes.php';
 require '../BusinessLogic/Create.php';
 require '../BusinessLogic/Read.php';
-// $db = new Dabes();
+$db = new Dabes();
 $create = new CreateFilm();
 $read = new Read();
 
@@ -15,6 +15,29 @@ $error = "";
 $message = "";
 $title = "";
 $genreErr = "";
+$result = "";
+$test = "";
+// $url = "https://www.youtube.com//embed/gvkr2V-JULE";
+// // $url = "https://youtu.be/eZbrMyGc0K0";
+// // $url = "https://google.com";
+// // $url = "http://dadangjebred.co.id";
+// $pedut = explode('/', $url);
+// if ($pedut[2] != 'www.youtube.com' && $pedut[2] != 'youtu.be') {
+//     echo 'tidak valid!';
+// } else {
+//     if (in_array('embed', $pedut)) {
+//         $result = $url;
+//     } else {
+//         if ($pedut[2] == 'www.youtube.com') {
+//             $exp = explode('watch?v=', $url);
+//             $result = $exp[0] . "/embed/" . $exp[1];
+//         } else if ($pedut[2] == 'youtu.be') {
+//             $result = "https://www.youtube.com" . "/embed/" . $pedut[3];
+//         }
+//     }
+// }
+
+
 
 if (isset($_POST['add'])) {
     if ($create->addFilm($_POST) > 0) {
@@ -65,7 +88,7 @@ if (isset($_POST['add'])) {
 <div class="row">
     <div class="col">
         <div class="card mt-4 border border-4 border-end-0 border-top-1 border-bottom-0 border-start-0 border-primary shadow  mb-2 bg-body rounded mx-auto" style="width: 70rem;">
-            <div class="card-header">
+            <div class="card-header text-primary fw-bold">
                 Film
             </div>
             <div class="card-body">
@@ -92,13 +115,13 @@ if (isset($_POST['add'])) {
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="title" class="form-label form-label-sm">Title</label>
-                                    <div class="col-sm-11">
+                                    <div class="col-sm-9">
                                         <input type="text" class="form-control form-control-sm" name="title" id="title" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <label for="<?php echo $genre['genre_list'] ?>" class="form-label form-label-sm">Genre</label>
-                                    <div class="col-sm-7">
+                                    <div class="col-sm-7 mb-3">
                                         <div class="row">
                                             <?php foreach ($genres as $genre) : ?>
                                                 <div class="col-6">
@@ -111,15 +134,23 @@ if (isset($_POST['add'])) {
                                                     </div>
                                                 </div>
                                             <?php endforeach; ?>
-                                            <a href="#" style="text-decoration: none;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 20 20">
+                                            <a href="add-genre.php" style="text-decoration: none;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 20 20">
                                                     <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
                                                 </svg> Add new genre </a>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col">
+                                    <div class="row mb-3">
+                                        <label for="trailer" class="form-label form-label-sm">Trailer</label>
+                                        <div class="col-10">
+                                            <input type="text" class="form-control form-control-sm" name="trailer" placeholder="https://youtube.com" id="trailer" required>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-1">
-                                <div class="vr" style="height: 400px;"></div>
+                                <div class="vr" style="height: 450px;"></div>
                             </div>
                             <div class="col-4">
                                 <div class="row mb-3">
@@ -159,7 +190,7 @@ if (isset($_POST['add'])) {
                                             </select>
                                         </div>
                                         <div class="col-2">
-                                            <a href="#" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 17 17">
+                                            <a href="add-director.php" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 17 17">
                                                     <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
                                                 </svg></a>
                                         </div>
@@ -177,7 +208,7 @@ if (isset($_POST['add'])) {
                                             </select>
                                         </div>
                                         <div class="col-2">
-                                            <a href="#" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 17 17">
+                                            <a href="add-genre.php" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 17 17">
                                                     <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
                                                 </svg></a>
                                         </div>

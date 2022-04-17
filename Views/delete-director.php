@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['login'])) {
+    header('Location: login-admin.php');
+    exit();
+}
+
 require '../BusinessLogic/Dabes.php';
 require '../BusinessLogic/Delete.php';
 

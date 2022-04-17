@@ -2,6 +2,7 @@
 class CreateFilm extends Dabes
 {
 
+    // function to add film 
     public function addFilm($data)
     {
         $title = self::validate($data['title']);
@@ -11,24 +12,45 @@ class CreateFilm extends Dabes
         $runtime = self::validate($data['runtime']);
         $production = self::validate($data['production']);
         $director = self::validate($data['director']);
-        $merge_genre = implode(", ", $genres);
+        $trailer = self::validate($data['trailer']);
 
-        // query to Films table
-        $picture = parent::uploadFilm();
-
-        if (!$picture) {
-            return false;
+        // check link, the link should from youtube.com // and add 'embed' every upload the film
+        $valid_trailer = $trailer;
+        $tr = explode('/', $trailer);
+        if ($tr[2] != 'www.youtube.com' && $tr[2] != 'youtu.be') {
+            return 0;
+        } else {
+            if (in_array('embed', $tr)) {
+                $valid_trailer = $trailer;
+            } else {
+                if ($tr[2] == 'www.youtube.com') {
+                    $exp = explode('watch?v=', $trailer);
+                    $valid_trailer = $exp[0] . "/embed/" . $exp[1];
+                } else if ($tr[2] == 'youtu.be') {
+                    $valid_trailer = "https://www.youtube.com" . "/embed/" . $tr[3];
+                }
+            }
         }
 
-        $query = $this->db->prepare("INSERT INTO films (title, release_date, picture, synopsis ,runtime) VALUES (:title, :release_date, :picture, :synopsis, :runtime)");
+        // merge genre from every pick user
+        $merge_genre = implode(", ", $genres);
+
+        // upload film and check
+        $picture = parent::uploadFilm();
+        if (!$picture) {
+            return 0;
+        }
+        // inser data to tabel film
+        $query = $this->db->prepare("INSERT INTO films (title, release_date, picture, synopsis ,runtime, trailer) VALUES (:title, :release_date, :picture, :synopsis, :runtime, :trailer)");
         $query->bindParam(':title', $title);
         $query->bindParam(':synopsis', $synopsis);
         $query->bindParam(':release_date', $release_date);
         $query->bindParam(':picture', $picture);
         $query->bindParam(':runtime', $runtime);
+        $query->bindParam(':trailer', $valid_trailer);
         $query->execute();
 
-        // insert data genres_films
+        // insert data to table genres_films
         $query = $this->db->prepare("INSERT INTO genres_films (genre_name) VALUE (:genre) ");
         $query->bindParam(':genre', $merge_genre);
         $query->execute();
@@ -66,7 +88,8 @@ class CreateFilm extends Dabes
         return $query->rowCount();
     }
 
-    public function addGenre_ist($data)
+    // function to add list genre
+    public function addGenre_list($data)
     {
         $name_genre = self::validate($data['genre_list']);
         $sql = "INSERT INTO genre_list (genre_list) VALUE (:new_genre)";
@@ -77,6 +100,7 @@ class CreateFilm extends Dabes
         return $query->rowCount();
     }
 
+    // function to add production genre
     public function addProduction_list($data)
     {
         $name_production = self::validate($data['name_production']);
@@ -91,6 +115,7 @@ class CreateFilm extends Dabes
         return $query->rowCount();
     }
 
+    // function to add director 
     public function addDirector_list($data)
     {
         $director_name = self::validate($data['name_director']);

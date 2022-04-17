@@ -7,7 +7,7 @@ $id_film = $_GET['id_film'];
 $shows = $read->showFilmsById($id_film);
 
 $date = $shows[0]['release_date'];
-$release = date("d-m-Y", strtotime($date));
+$release = date("d F Y", strtotime($date));
 
 // echo "<pre>";
 // var_dump($shows);
@@ -23,7 +23,7 @@ $release = date("d-m-Y", strtotime($date));
             <div class="row m-3">
                 <div class="hstack gap-3">
                     <div class="col-3">
-                        <img src="uploaded/<?php echo $shows[0]['picture'] ?>" width="250px" class="rounded image-detail" alt="">
+                        <img src="uploaded/<?php echo $shows[0]['picture'] ?>" style="width: 250px; height: 375px" class="rounded image-detail" alt="">
                     </div>
                     <div class="vr "></div>
                     <div class="header-detail align-self-start">
@@ -34,6 +34,7 @@ $release = date("d-m-Y", strtotime($date));
                             <p><span class="header-item">Production:</span> <?php echo $shows[0]['name_production'] ?></p>
                             <p><span class="header-item">Director:</span> <?php echo $shows[0]['name_director'] ?></p>
                             <p><span class="header-item">Release:</span> <?php echo $release ?></p>
+                            <p><span class="header-item">Trailer:</span> <?php echo $shows[0]['trailer'] ?></p>
                             <p><span class="header-item">Synopsis:</span></p>
                             <p><?php echo $shows[0]['synopsis'] ?></p>
                         </div>

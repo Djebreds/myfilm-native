@@ -1,41 +1,46 @@
+<?php require 'header.php' ?>
 <?php
-require '../BusinessLogic/Dabes.php';
-require '../BusinessLogic/Read.php';
 
-$read = new Read();
-$poster = $read->showFilms();
+
 $genres = $read->showListGenres();
+$releases = $read->showFilms();
+$posters = $read->showFilms();
 
 // $genre_name = $_GET['page'];
-$genre_name = "Action";
-$genre_name = $_GET['page'];
-if ($genre_name == "All") {
+$genre_name = "";
+$page = "";
+$date = "";
+$datePage = "";
+
+
+if (!isset($_GET['page'])) {
     $posters = $read->showFilms();
+    $releases = $read->showFilms();
+}
+if (!empty($_GET)) {
+    $genre_name = $_GET['page'];
+    $date = (int)$_GET['page'];
+
+
+    if (is_numeric($_GET['page'])) {
+        $datePage = "active";
+        $releases = $read->showFilmByDate($date);
+    } else {
+        $page = "active";
+        if ($_GET['page'] == 'All') {
+            $posters = $read->showFilms();
+            $releases = $read->showFilms();
+        } else {
+            $posters = $read->showFilmByGenre($genre_name);
+            $releases = $read->showFilmByDate($date);
+        }
+    }
 } else {
-    $posters = $read->showFilmByGenre($genre_name);
+    $posters = $read->showFilms();
+    $releases = $read->showFilms();
 }
 
-
-// $countPerPage = 10;
-// $countData = count($read->showFilms());
-// $countPage = ceil($countData / $countPerPage);
-// $activePage = (isset($_GET['page']) ? $_GET['page'] : 1);
-// // $firstData = ($countPerPage * $activePage) - $countPerPage;
-// $gere = 'Action';
-
-// $genre = $poster[0]['genre_name'];
-// $get_genre = explode(', ', $genre);
-
-
-// echo "<pre>";
-// var_dump($posters);
-// die;
-
-
-
 ?>
-
-<?php require 'header.php' ?>
 <section>
     <div class="container">
         <div class="row g-0 ">
@@ -55,74 +60,147 @@ if ($genre_name == "All") {
                 </nav>
             </div>
             <div class="col-md-10">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Genre</a>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <?php if (empty($_GET)) { ?>
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false">Genre</button>
+                        <?php } else { ?>
+                            <button class="nav-link <?php echo $page ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false">Genre</button>
+                        <?php } ?>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Trailer</a>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link <?php echo $datePage ?>" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Date</button>
                     </li>
                 </ul>
-                <div class="row">
-                    <div class="col">
-                        <nav aria-label="...">
-                            <ul class="pagination pagination-sm">
-                                <div class="row g-2">
-                                    <div class="col">
-                                        <?php if ($genre_name == "All") { ?>
-                                            <li class="page-item text-center active"><a class="page-link m-1" href="?page=All "><img src="../Views/assets/genre-pic/All.png" width="25px" class="m-1" alt=""> All</a></li>
-                                        <?php } else { ?>
-                                            <li class="page-item text-center"><a class="page-link m-1" href="?page=All "><img src="../Views/assets/genre-pic/All.png" width="25px" class="m-1" alt=""> All</a></li>
-                                        <?php } ?>
+                <div class="tab-content" id="myTabContent">
+                    <?php if (empty($_GET)) { ?>
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <?php } else { ?>
+                            <div class="tab-pane fade show <?php echo $page ?>" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <?php } ?>
+                            <div class="row">
+                                <div class="col">
+                                    <nav aria-label="...">
+                                        <ul class="pagination pagination-sm">
+                                            <div class="row g-2">
+                                                <div class="col">
+                                                    <?php if ($genre_name == "All") { ?>
+                                                        <li class="page-item text-center active"><a class="page-link m-1" href="?page=All "><img src="../Views/assets/genre-pic/All.png" width="25px" class="m-1" alt=""> All</a></li>
+                                                    <?php } else { ?>
+                                                        <li class="page-item text-center"><a class="page-link m-1" href="?page=All "><img src="../Views/assets/genre-pic/All.png" width="25px" class="m-1" alt=""> All</a></li>
+                                                    <?php } ?>
+                                                </div>
+                                                <?php foreach ($genres as $genre) { ?>
+                                                    <div class="col">
+                                                        <?php if ($genre_name == $genre['genre_list']) { ?>
+                                                            <li class="page-item text-center <?php echo ($genre_name == $genre['genre_list']) ? 'active' : '' ?>">
+                                                                <a class="page-link m-1" href="?page=<?php echo $genre['genre_list'] ?>">
+                                                                    <img class="sticky-top m-1" src="../Views/assets/genre-pic/genre-<?php echo $genre['id_list'] ?>.png" width="25px" alt="">
+                                                                    <?php echo " " . $genre['genre_list'] ?>
+                                                                </a>
+                                                            </li>
+                                                        <?php } else { ?>
+                                                            <li class="page-item text-center">
+                                                                <a class="page-link m-1" href="?page=<?php echo $genre['genre_list'] ?>">
+                                                                    <img class="sticky-top m-1" src="../Views/assets/genre-pic/genre-<?php echo $genre['id_list'] ?>.png" width="25px" alt="">
+                                                                    <?php echo " " . $genre['genre_list'] ?>
+                                                                </a>
+                                                            </li>
+                                                        <?php } ?>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row g-0">
+                                <?php foreach ($posters as $poster) { ?>
+                                    <?php
+                                    $date = $poster['release_date'];
+                                    $release_date = date("d-m-Y", strtotime($date));
+                                    ?>
+                                    <div class="col-2 m-1" style="width: 9.1rem">
+                                        <div class="card border border-0">
+                                            <img src=" ../Views/uploaded/<?php echo $poster['picture'] ?>" style="width: 146px; height: 218px" class="rounded-3 card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <div class="card-title">
+                                                    <a href="detail-film.php?id_film=<?php echo $poster['id_film'] ?>" class="stretched-link"> <?php echo $poster['title'] ?></a>
+                                                </div>
+                                                <p class="card-item"><?php echo $release_date ?> • <?php echo $poster['genre_name'] ?></p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <?php foreach ($genres as $genre) { ?>
-                                        <div class="col">
-                                            <?php if ($genre_name == $genre['genre_list']) { ?>
-                                                <li class="page-item text-center <?php echo ($genre_name == $genre['genre_list']) ? 'active' : '' ?>"><a class="page-link m-1" href="?page=<?php echo $genre['genre_list'] ?>"><img class="sticky-top m-1" src="../Views/assets/genre-pic/genre-<?php echo $genre['id_list'] ?>.png" width="25px" alt=""><?php echo " " . $genre['genre_list'] ?></a></li>
-                                            <?php } else { ?>
-                                                <li class="page-item text-center"><a class="page-link m-1" href="?page=<?php echo $genre['genre_list'] ?>"><img class="sticky-top m-1" src="../Views/assets/genre-pic/genre-<?php echo $genre['id_list'] ?>.png" width="25px" alt=""><?php echo " " . $genre['genre_list'] ?></a></li>
-                                            <?php } ?>
+                                <?php } ?>
+                            </div>
+                            </div>
+                            <div class="tab-pane fade show <?php echo $datePage ?>" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="row">
+                                    <div class="col">
+                                        <nav aria-label="...">
+                                            <ul class="pagination pagination-sm">
+                                                <div class="row g-2">
+                                                    <?php for ($a = 2000; $a <= 2022; $a++) { ?>
+                                                        <div class="col">
+                                                            <?php if ($a == 2000) { ?>
+                                                                <?php if (isset($_GET['page'])) { ?>
+                                                                    <li class="page-item text-center  <?php echo ($_GET['page'] == 0) ? 'active' : '' ?>">
+                                                                        <a class="page-link m-1" style="font-size: 12px;" href="?page=0">All</a>
+                                                                    </li>
+                                                                <?php } else { ?>
+                                                                    <li class="page-item text-center">
+                                                                        <a class="page-link m-1" style="font-size: 12px;" href="?page=0">All</a>
+                                                                    </li>
+                                                                <?php } ?>
+                                                            <?php } else {  ?>
+                                                                <?php if (!empty($_GET)) { ?>
+                                                                    <?php if (isset($_GET)) { ?>
+                                                                        <li class="page-item text-center  <?php echo ($_GET['page'] == $a) ? 'active' : '' ?>">
+                                                                            <a class="page-link m-1" href="?page=<?php echo $a ?>"><?php echo $a ?></a>
+                                                                        </li>
+                                                                    <?php } else { ?>
+                                                                        <li class="page-item text-center">
+                                                                            <a class="page-link m-1" href="?page=<?php echo $a ?>"><?php echo $a ?></a>
+                                                                        </li>
+                                                                    <?php  } ?>
+                                                                <?php } else { ?>
+                                                                    <li class="page-item text-center">
+                                                                        <a class="page-link m-1" href="?page=<?php echo $a ?>"><?php echo $a ?></a>
+                                                                    </li>
+                                                                <?php } ?>
+                                                            <?php } ?>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row g-0">
+                                    <?php foreach ($releases as $poster) { ?>
+                                        <?php
+                                        $date = $poster['release_date'];
+                                        $release_date = date("d-m-Y", strtotime($date));
+                                        ?>
+                                        <div class="col-2 m-1" style="width: 9.1rem">
+                                            <div class="card border border-0">
+                                                <img src=" ../Views/uploaded/<?php echo $poster['picture'] ?>" style="width: 146px; height: 218px" class="rounded-3 card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <div class="card-title">
+                                                        <a href="detail-film.php?id_film=<?php echo $poster['id_film'] ?>" class="stretched-link"> <?php echo $poster['title'] ?></a>
+                                                    </div>
+                                                    <p class="card-item"><?php echo $release_date ?> • <?php echo $poster['genre_name'] ?></p>
+                                                </div>
+                                            </div>
                                         </div>
                                     <?php } ?>
                                 </div>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-                <hr>
-                <!-- <div class="row g-0 justify-content-center">
-                    
-                        <div class="col-4 m-1" style="width: 16rem">
-                            <div class="card mt-2 border border-white">
-                                <img src=" ../Views/assets/big-hero-lg.png" class="rounded-3 card-img-top" alt="...">
-                                <div class="card-body">
-                                    <div class="card-title">
-                                        <a href="#" class="stretched-link"> Big Hero 6</a>
-                                    </div>
-                                    <p class="card-item">20-8-2016 • Action, Adventure, Sci-Fi</p>
-                                </div>
                             </div>
                         </div>
-                    
-                    <hr>
-                </div> -->
-                <div class="row g-0">
-                    <?php foreach ($posters as $poster) { ?>
-                        <div class="col-2 m-1" style="width: 9.1rem">
-                            <div class="card border border-white">
-                                <img src=" ../Views/assets/naruto.png" class="rounded-3 card-img-top" alt="...">
-                                <div class="card-body">
-                                    <div class="card-title">
-                                        <a href="detail.php?id_film=<?php echo $poster['id_film'] ?>" class="stretched-link"> <?php echo $poster['title'] ?></a>
-                                    </div>
-                                    <p class="card-item"><?php echo $poster['release_date'] ?> • <?php echo $poster['genre_name'] ?></p>
-                                </div>
-                            </div>
-                        </div>
-                    <?php } ?>
                 </div>
             </div>
         </div>
-    </div>
 </section>
 <?php require 'footer.php' ?>

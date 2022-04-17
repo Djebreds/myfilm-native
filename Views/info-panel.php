@@ -2,12 +2,13 @@
 require '../BusinessLogic/Dabes.php';
 require '../BusinessLogic/Read.php';
 $read = new Read();
+
 ?>
 <?php require 'header.php' ?>
 <h2>Info</h2>
 <div class="card mt-4 shadow  mb-2 bg-body rounded" style="width: 40rem;">
     <div class="card-header">
-        <a href="#" class="title-card">Detail Film</a>
+        <a href="#" class="title-card">Info User</a>
     </div>
     <div class="card-body">
         <div class="container">
@@ -18,8 +19,12 @@ $read = new Read();
                         <div class="col-12">
                             <h3><span class="item-info"><?php echo $username ?></span></h3>
                             <hr class="haer">
+                            <?php
+                            $date = $created_at;
+                            $date = date("d F Y / h:i:s A", strtotime($date));
+                            ?>
                             <p><span class="item-info">Email:</span> <?php echo $email ?></p>
-                            <p><span class="item-info">Created at:</span> <?php echo $created_at ?></p>
+                            <p><span class="item-info">Created at:</span> <?php echo $date ?></p>
                             <p><span class="item-info">Role:</span> Admin</p>
                         </div>
                     </div>

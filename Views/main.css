@@ -1,0 +1,288 @@
+    * {
+            font-family: "Nunito", sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            
+        }
+
+        .navbar {
+            z-index: 5;
+        }
+
+        .list-item {
+            height: 100%;
+        }
+        
+        .logout {
+            position: fixed;
+            bottom: 0;
+            width: 16%;
+            height: 100px;
+        }
+        
+        .profile-item .profile {
+            color: #696969;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .dashboard {
+            margin: 10px!important;
+        }
+
+
+    
+
+    
+
+        .sidenav {
+            height: 100%;
+            width: 16%;
+            position: fixed;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            background-image: linear-gradient(to right bottom, #4e73df, #496dd8, #4468d1, #3f62cb, #3a5dc4);
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 20px;
+            overflow: visible;
+        }
+
+        .sidenav .logo {
+            text-decoration: none;
+            font-size: 20px;
+            padding: 8px 8px 8px 20px;
+            display: block;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            margin-left: 250px;
+            padding: 16px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+
+         .list-item a {
+            padding: 8px 8px 8px 20px;
+            text-decoration: none;
+            font-size: 13px;
+            color: #e3e3e3;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .list-item a:hover {
+            color: #fff;
+        }
+
+
+
+        .list-item p {
+            padding: 20px 5px 5px 20px;
+            margin: 0;
+            font-size: 11px;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 800;
+            color: #a9bad1;
+        }
+
+
+
+        /* .item-list {
+            height: 30rem;
+        } */
+
+        .hr {
+            margin: auto;
+            width: 85%;
+            border-top: 1px solid #fff;
+        }
+
+        .taks-list .name {
+            padding: 20px;
+            margin: auto;
+        }
+
+        .taks-list .admin ul li a {
+            font-size: 15px;
+        }
+
+        .tabel tr th {
+            font-size: 13px;
+            color: #787878;
+        }
+
+        .tabel tr td {
+            font-size: 12px;
+            color: grey;
+        }
+
+        .title-card {
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 800;
+            color: #0d6efd;
+        }
+
+        .count {
+            margin: 0px;
+            font-size: 9px;
+            font-weight: 700;
+            color: #0d6efd;
+        }
+
+        .status {
+            margin: 0px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #696969;
+        }
+
+        .icon-film {
+            color: #bdc8db;
+        }
+
+        .list-item ul {
+            list-style-type: none;
+
+        }
+
+        .drop-menu p {
+            font-size: 12px;
+        }
+
+        .drop-menu a {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .delete_status .alert {
+            font-size: 12px;
+            height: 15%;
+            width: 500px;
+        }
+
+        .update {
+            font-weight: 500 !important;
+        }
+
+        .image-detail {
+            max-width: 250px;
+            margin-left: 30px;
+        }
+
+        .header-detail p {
+            margin: 1px;
+            color: #787878;
+            font-size: 13px;
+        }
+
+        .header-detail h4 {
+            color: #0d6efd;
+            font: 15px;
+            font-weight: 600;
+        }
+
+        .header-detail .header-item {
+            color: #0d6efd;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .header-title {
+            font-size: 25px;
+            font-weight: 600;
+            color: #0d6efd;
+        }
+
+        hr.haer {
+            color: #696969;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            padding: 0px;
+            border-top: 1px solid;
+            width: 250px;
+        }
+
+        .header-about {
+            font-size: 13px;
+            color: #787878;
+
+        }
+
+        .info-header {
+            color: #787878;
+        }
+
+        .item-info {
+            font-weight: 600;
+            color: #0d6efd;
+        }
+
+        .button-text {
+            font-size: 14px;
+            margin-left: 2px;
+        }
+
+        .button-icon {
+            background-color: rgba(0, 0, 0, 0.20);
+            padding: 6px;
+        }
+        .button-icon svg {
+            margin-bottom: 1px;
+            margin-left: 1px;   
+        }
+        
+
+        /* 
+        table.table {
+            margin: 0 ;
+            width: 700px;
+        }
+
+        /** only for the head of the table. */
+        /* table.table thead th {
+            padding: 0;
+        } */
+
+        /** only for the body of the table. */
+        /* table.table tbody td {
+            padding: 0;
+        } */
+
+        /** only for the head of the table. */
+        /* table.table thead th {
+            padding: 0;
+        } */
+
+        /** only for the body of the table. */
+        /* table.table tbody td {
+            margin-left: 0px;
+            padding: 0;
+        } */
+        .active {
+            color: #fff !important;
+            font-weight: 600;
+        }
+        

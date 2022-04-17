@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['login'])) {
+    header('Location: login-admin.php');
+    exit();
+}
 require '../BusinessLogic/Dabes.php';
 require '../BusinessLogic/Delete.php';
 
@@ -7,9 +13,9 @@ $id_film = $_GET['id_film'];
 if ($delete->deleteFilm($id_film) > 0) {
     $error = false;
     $status = 'success';
-    header('Location: filmtable-panel.php?status=' . $status);
+    header('Location: maintable-panel.php?status=' . $status);
 } else {
     $error = false;
     $status = 'failed';
-    header('Location: filmtable-panel.php?status=' . $status);
+    header('Location: maintable-panel.php?status=' . $status);
 }
