@@ -65,7 +65,7 @@ $populars = $read->showLimitMain(26, 4);
                     <?php foreach ($populars as $popular) { ?>
                         <?php
                         $date = $popular['release_date'];
-                        $release_date = date("d-m-Y", strtotime($date));
+                        $release_date = date("d M Y", strtotime($date));
                         ?>
                         <div class="col-4 m-1" style="width: 16rem">
                             <div class="card mt-2 border border-0">
@@ -91,7 +91,7 @@ $populars = $read->showLimitMain(26, 4);
                                     <?php foreach ($upcomings as $upcoming) { ?>
                                         <?php
                                         $date = $upcoming['release_date'];
-                                        $release_date = date("d-m-Y", strtotime($date));
+                                        $release_date = date("d M Y", strtotime($date));
                                         ?>
                                         <div class="col-2 m-1 m-1" style="width: 9.1rem">
                                             <div class="card border border-0">
@@ -114,7 +114,7 @@ $populars = $read->showLimitMain(26, 4);
                                     <?php foreach ($upcomings2 as $upcoming) { ?>
                                         <?php
                                         $date = $upcoming['release_date'];
-                                        $release_date = date("d-m-Y", strtotime($date));
+                                        $release_date = date("d M Y", strtotime($date));
                                         ?>
                                         <div class="col-2 m-1 m-1" style="width: 9.1rem">
                                             <div class="card border border-0">
@@ -153,7 +153,7 @@ $populars = $read->showLimitMain(26, 4);
                     <?php foreach ($posters as $poster) { ?>
                         <?php
                         $date = $poster['release_date'];
-                        $release_date = date("d-m-Y", strtotime($date));
+                        $release_date = date("d M Y", strtotime($date));
                         ?>
                         <div class="col-2 m-1 m-1" style="width: 9.1rem">
                             <div class="card border border-0">

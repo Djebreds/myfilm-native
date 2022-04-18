@@ -1,6 +1,6 @@
 # Film-project
 
-This project created by Refi Ahmad Fauzan,
+This project created by Djebreds,
 the technology used is PHP Native, HTML, CSS and Bootstrap 5.
 Created on 4 April 2022.
 

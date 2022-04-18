@@ -69,93 +69,9 @@ if (isset($_POST['register'])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;800&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            font-family: "Nunito", sans-serif;
-            margin: 0px;
-            padding: 0px;
-            box-sizing: border-box;
-        }
-
-        .card {
-            position: relative;
-            border-radius: 30px;
-            overflow: hidden;
-        }
-
-        .card-body {
-            position: relative;
-        }
-
-        div {
-            z-index: 1;
-        }
-
-        label {
-            font-size: 13px;
-        }
-
-        .svg-1 {
-            position: absolute;
-            z-index: -2;
-            width: 370%;
-            border-radius: 20px;
-            top: 15px;
-            transform: rotate(180deg);
-        }
-
-        .svg-2 {
-            position: absolute;
-            z-index: -4;
-            width: 200%;
-            border-radius: 20px;
-            transform: rotate(-145deg);
-        }
-
-        .svg-3 {
-            position: absolute;
-            z-index: -3;
-            left: 60%;
-            top: 100px;
-            width: 40%;
-            transform: rotate(15deg) scaleX(-1);
-        }
-
-        .register {
-            border-radius: 25px;
-            width: 9.4rem;
-        }
-
-        .login {
-            border-radius: 25px;
-            width: 9.4rem;
-        }
-
-        .intro h5 {
-            font-size: 20px;
-            font-weight: 500;
-        }
-
-        .intro h4 {
-            font-size: 25px;
-            font-weight: 600;
-        }
-
-        .copyright {
-            font-size: 12px;
-            font-weight: 100;
-            margin-right: 20px;
-        }
-
-        .invalid {
-            font-size: 12px;
-            margin: 2px;
-            color: #f23838;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style-register.css">
+    <title>Register Admin</title>
 
 <body>
     <div class="container">

@@ -93,7 +93,7 @@ if (isset($_POST['searchButton'])) {
                 <?php foreach ($films as $film) : ?>
                     <?php
                     $Date = $film['release_date'];
-                    $release = date("d-m-Y", strtotime($Date));
+                    $release = date("d M Y", strtotime($Date));
                     ?>
                     <tr>
                         <td><?php echo $a ?></td>

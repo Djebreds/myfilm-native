@@ -7,7 +7,7 @@ $id_film = $_GET['id_film'];
 $shows = $read->showFilmsById($id_film);
 
 $date = $shows[0]['release_date'];
-$release = date("d F Y", strtotime($date));
+$release = date("d M Y", strtotime($date));
 
 // echo "<pre>";
 // var_dump($shows);

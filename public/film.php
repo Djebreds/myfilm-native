@@ -119,7 +119,7 @@ if (!empty($_GET)) {
                                 <?php foreach ($posters as $poster) { ?>
                                     <?php
                                     $date = $poster['release_date'];
-                                    $release_date = date("d-m-Y", strtotime($date));
+                                    $release_date = date("d M Y", strtotime($date));
                                     ?>
                                     <div class="col-2 m-1" style="width: 9.1rem">
                                         <div class="card border border-0">
@@ -182,7 +182,7 @@ if (!empty($_GET)) {
                                     <?php foreach ($releases as $poster) { ?>
                                         <?php
                                         $date = $poster['release_date'];
-                                        $release_date = date("d-m-Y", strtotime($date));
+                                        $release_date = date("d M Y", strtotime($date));
                                         ?>
                                         <div class="col-2 m-1" style="width: 9.1rem">
                                             <div class="card border border-0">

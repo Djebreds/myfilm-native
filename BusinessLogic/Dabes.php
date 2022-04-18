@@ -57,17 +57,6 @@ class Dabes
         return $namePicture;
     }
 
-    // function to resize image while uploading 
-    public function resizeImage($resourceType, $image_width, $image_height)
-    {
-        $resizeWidth = 400;
-        $resizeHeight = 600;
-        $iamgeLayer = imagecreatetruecolor($resizeWidth, $resizeHeight);
-        imagecopyresampled($iamgeLayer, $resourceType, 0, 0, 0, 0, $resizeWidth, $resizeHeight, $image_width, $image_height);
-        return $iamgeLayer;
-    }
-
-
     // function to make validate data
     public function validate($data)
     {

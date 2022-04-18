@@ -20,7 +20,7 @@ if (isset($_POST['searchButton'])) {
 
 ?>
 <?php require 'header.php' ?>
-<h2>Director Table</h2>
+<h2>Data Director</h2>
 <div class="card mt-4 shadow  mb-2 bg-body rounded">
     <div class=" card-header">
         <a href="#" class="title-card">Table Directors</a>
@@ -29,11 +29,13 @@ if (isset($_POST['searchButton'])) {
         <div class="row">
             <div class="hstack gap-2 mb-3">
                 <div class="col">
-                    <a href="add-director.php" class="btn btn-success btn-sm add-film ps-0">
-                        <span class="button-icon ms-auto pe-2"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 448 512">
-                                <path d="M384 32C419.3 32 448 60.65 448 96V416C448 451.3 419.3 480 384 480H64C28.65 480 0 451.3 0 416V96C0 60.65 28.65 32 64 32H384zM224 368C237.3 368 248 357.3 248 344V280H312C325.3 280 336 269.3 336 256C336 242.7 325.3 232 312 232H248V168C248 154.7 237.3 144 224 144C210.7 144 200 154.7 200 168V232H136C122.7 232 112 242.7 112 256C112 269.3 122.7 280 136 280H200V344C200 357.3 210.7 368 224 368z" />
-                            </svg></span>
-                        <span class="button-text">Add director</span>
+                    <a href="add-director.php" type="button" class="button btn btn-success">
+                        <span class="button__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" viewBox="0 0 640 512">
+                                <path d="M224 256c70.7 0 128-57.31 128-128S294.7 0 224 0C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3C0 496.5 15.52 512 34.66 512h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304zM616 200h-48v-48C568 138.8 557.3 128 544 128s-24 10.75-24 24v48h-48C458.8 200 448 210.8 448 224s10.75 24 24 24h48v48C520 309.3 530.8 320 544 320s24-10.75 24-24v-48h48C629.3 248 640 237.3 640 224S629.3 200 616 200z" />
+                            </svg>
+                        </span>
+                        <span class="button__text"> Add Director </span>
                     </a>
                 </div>
                 <?php if (in_array('success', $_REQUEST)) { ?>

@@ -20,7 +20,7 @@ if (isset($_POST['searchButton'])) {
 
 <?php require 'header.php' ?>
 
-<h2>Production Table</h2>
+<h2>Data Production</h2>
 <div class="card mt-4 shadow  mb-2 bg-body rounded">
     <div class="card-header">
         <a href="#" class="title-card">Table Productions</a>
@@ -29,11 +29,13 @@ if (isset($_POST['searchButton'])) {
         <div class="row">
             <div class="hstack gap-2 mb-3">
                 <div class="col">
-                    <a href="add-production.php" class="btn btn-success btn-sm add-film ps-0">
-                        <span class="button-icon ms-auto pe-2"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 448 512">
-                                <path d="M384 32C419.3 32 448 60.65 448 96V416C448 451.3 419.3 480 384 480H64C28.65 480 0 451.3 0 416V96C0 60.65 28.65 32 64 32H384zM224 368C237.3 368 248 357.3 248 344V280H312C325.3 280 336 269.3 336 256C336 242.7 325.3 232 312 232H248V168C248 154.7 237.3 144 224 144C210.7 144 200 154.7 200 168V232H136C122.7 232 112 242.7 112 256C112 269.3 122.7 280 136 280H200V344C200 357.3 210.7 368 224 368z" />
-                            </svg></span>
-                        <span class="button-text">Add production</span>
+                    <a href="add-production.php" type="button" class="button btn btn-success">
+                        <span class="button__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 640 512">
+                                <path d="M0 48C0 21.49 21.49 0 48 0H336C362.5 0 384 21.49 384 48V232.2C344.9 264.5 320 313.3 320 368C320 417.5 340.4 462.2 373.3 494.2C364.5 505.1 351.1 512 336 512H240V432C240 405.5 218.5 384 192 384C165.5 384 144 405.5 144 432V512H48C21.49 512 0 490.5 0 464V48zM80 224C71.16 224 64 231.2 64 240V272C64 280.8 71.16 288 80 288H112C120.8 288 128 280.8 128 272V240C128 231.2 120.8 224 112 224H80zM160 272C160 280.8 167.2 288 176 288H208C216.8 288 224 280.8 224 272V240C224 231.2 216.8 224 208 224H176C167.2 224 160 231.2 160 240V272zM272 224C263.2 224 256 231.2 256 240V272C256 280.8 263.2 288 272 288H304C312.8 288 320 280.8 320 272V240C320 231.2 312.8 224 304 224H272zM64 144C64 152.8 71.16 160 80 160H112C120.8 160 128 152.8 128 144V112C128 103.2 120.8 96 112 96H80C71.16 96 64 103.2 64 112V144zM176 96C167.2 96 160 103.2 160 112V144C160 152.8 167.2 160 176 160H208C216.8 160 224 152.8 224 144V112C224 103.2 216.8 96 208 96H176zM256 144C256 152.8 263.2 160 272 160H304C312.8 160 320 152.8 320 144V112C320 103.2 312.8 96 304 96H272C263.2 96 256 103.2 256 112V144zM640 368C640 447.5 575.5 512 496 512C416.5 512 352 447.5 352 368C352 288.5 416.5 224 496 224C575.5 224 640 288.5 640 368zM492.7 323.3L521.4 352H432C423.2 352 416 359.2 416 368C416 376.8 423.2 384 432 384H521.4L492.7 412.7C486.4 418.9 486.4 429.1 492.7 435.3C498.9 441.6 509.1 441.6 515.3 435.3L571.3 379.3C577.6 373.1 577.6 362.9 571.3 356.7L515.3 300.7C509.1 294.4 498.9 294.4 492.7 300.7C486.4 306.9 486.4 317.1 492.7 323.3V323.3z" />
+                            </svg>
+                        </span>
+                        <span class="button__text"> Add Production </span>
                     </a>
                 </div>
                 <?php if (in_array('success', $_REQUEST)) { ?>
@@ -96,7 +98,7 @@ if (isset($_POST['searchButton'])) {
             <?php foreach ($productions as $production) : ?>
                 <?php
                 $date = $production['founded_date'];
-                $founded = date("d-m-Y", strtotime($date));
+                $founded = date("d M Y", strtotime($date));
                 ?>
                 <tr>
                     <td><?php echo $a ?></td>

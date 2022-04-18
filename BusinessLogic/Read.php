@@ -7,6 +7,7 @@ class Read extends Dabes
     public function showListGenres()
     {
         $query = $this->db->prepare("SELECT * FROM genre_list");
+
         $query->execute();
         $data = $query->fetchAll(PDO::FETCH_ASSOC);
         return $data;

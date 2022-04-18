@@ -157,7 +157,7 @@ $gen_sport = count($sport);
         <div class="col-9">
             <div class="card mt-4 shadow  mb-2 bg-body rounded" style="max-width: 60rem;">
                 <div class="card-header">
-                    <a href="maintable-panel.php" class="title-card">Table Main</a>
+                    <a href="maintable-panel.php" class="title-card">Data Film</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-sm tabel   ">
@@ -173,7 +173,7 @@ $gen_sport = count($sport);
                         <?php foreach ($tableMain as $film) : ?>
                             <?php
                             $date = $film['release_date'];
-                            $release = date("d-m-Y", strtotime($date));
+                            $release = date("d M Y", strtotime($date));
                             ?>
                             <tr>
                                 <td><?php echo $a ?></td>
@@ -193,7 +193,7 @@ $gen_sport = count($sport);
         <div class="col-3">
             <div class="card mt-4 shadow  mb-2 bg-body rounded" style="max-width: 60rem;">
                 <div class="card-header">
-                    <a href="directortable-panel.php" class="title-card">Table Directors</a>
+                    <a href="directortable-panel.php" class="title-card">Data Directors</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-sm tabel">
@@ -249,11 +249,11 @@ $gen_sport = count($sport);
         <div class="col-7">
             <div class="card mt-4 shadow  mb-2 bg-body " style="max-width: 60rem;">
                 <div class="card-header">
-                    <a href="filmtable-panel.php" class="title-card">Table Film</a>
+                    <a href="filmtable-panel.php" class="title-card">Data Genre</a>
                 </div>
                 <div class="card-body">
                     <div>
-                        <canvas id="myChart" width="500px"></canvas>
+                        <canvas id="myChart" width="500px" height="230px"></canvas>
                     </div>
                 </div>
             </div>
@@ -262,7 +262,7 @@ $gen_sport = count($sport);
         <div class="col-5">
             <div class="card mt-4 shadow  mb-2 bg-body rounded" style="max-width: 60rem;">
                 <div class="card-header">
-                    <a href="productiontable-panel.php" class="title-card">Table Productions</a>
+                    <a href="productiontable-panel.php" class="title-card">Data Productions</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-sm tabel   ">
@@ -275,7 +275,7 @@ $gen_sport = count($sport);
                         <?php foreach ($tableProductons as $production) : ?>
                             <?php
                             $date = $production['founded_date'];
-                            $founded = date("d-m-Y", strtotime($date));
+                            $founded = date("d M Y", strtotime($date));
                             ?>
                             <tr>
                                 <td><?php echo $a ?></td>
@@ -334,22 +334,23 @@ $gen_sport = count($sport);
                 <?php echo json_encode($gen_thril) ?>,
                 <?php echo json_encode($gen_sport) ?>
             ],
+
             backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)',
-                'rgb(223, 123, 21)',
-                'rgb(90, 215, 76)',
-                'rgb(120, 120, 26)',
+                'rgb(240, 115, 43)',
                 'rgb(125, 95, 56)',
-                'rgb(85, 25, 50)',
-                'rgb(90, 10, 20)',
-                'rgb(30, 25, 86)',
+                'rgb(79, 43, 71)',
+                'rgb(215, 237, 71)',
+                'rgb(71, 137, 237)',
                 'rgb(70, 80, 90)',
-                'rgb(120, 90, 70)',
+                'rgb(127, 222, 69)',
+                'rgb(85, 25, 50)',
+                'rgb(25, 88, 99)',
+                'rgb(237, 71, 124)',
+                'rgb(107, 71, 237)',
+                'rgb(57, 58, 130)',
                 'rgb(230, 200, 86)',
-                'rgb(70, 20, 86)',
-                'rgb(102, 60, 96)',
+                'rgb(156, 57, 50)',
+                'rgb(0, 0, 0)'
             ],
             hoverOffset: 4
         }]

@@ -21,7 +21,7 @@ $read = new Read();
                             <hr class="haer">
                             <?php
                             $date = $created_at;
-                            $date = date("d F Y / h:i:s A", strtotime($date));
+                            $date = date("d M Y | h:i:s A", strtotime($date));
                             ?>
                             <p><span class="item-info">Email:</span> <?php echo $email ?></p>
                             <p><span class="item-info">Created at:</span> <?php echo $date ?></p>

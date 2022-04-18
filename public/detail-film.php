@@ -69,7 +69,7 @@ $director = $read->searchDirector($poster[0]['name_director']);
                                                             <div class="col-md-12">
                                                                 <?php
                                                                 $date = $poster[0]['release_date'];
-                                                                $release_date = date("d F Y", strtotime($date));
+                                                                $release_date = date("d M Y", strtotime($date));
                                                                 ?>
                                                                 <h4 class="card-title"><?php echo $poster[0]['title'] ?></h4>
                                                                 <hr>
@@ -108,7 +108,7 @@ $director = $read->searchDirector($poster[0]['name_director']);
                                                     <div class="col-md-10">
                                                         <?php
                                                         $date = $production[0]['founded_date'];
-                                                        $founded_date = date("d F Y", strtotime($date));
+                                                        $founded_date = date("d M Y", strtotime($date));
                                                         ?>
                                                         <h4 class="card-about">Production Company : </h4>
                                                         <h5 class="text-primary"><?php echo $production[0]['name_production'] ?> | <?php echo $founded_date ?></h5>

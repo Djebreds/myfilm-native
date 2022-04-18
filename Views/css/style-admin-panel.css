@@ -31,11 +31,6 @@
             margin: 10px!important;
         }
 
-
-    
-
-    
-
         .sidenav {
             height: 100%;
             width: 16%;
@@ -45,7 +40,6 @@
             left: 0;
             background-image: linear-gradient(to right bottom, #4e73df, #496dd8, #4468d1, #3f62cb, #3a5dc4);
             overflow-x: hidden;
-            transition: 0.5s;
             padding-top: 20px;
             overflow: visible;
         }
@@ -68,7 +62,7 @@
         }
 
         #main {
-            transition: margin-left .5s;
+            /* transition: margin-left .5s; */
             margin-left: 250px;
             padding: 16px;
         }
@@ -89,13 +83,12 @@
             font-size: 13px;
             color: #e3e3e3;
             display: block;
-            transition: 0.3s;
         }
 
         .list-item a:hover {
             color: #fff;
+            transition: 0.3s ease-in-out;
         }
-
 
 
         .list-item p {
@@ -239,50 +232,50 @@
             font-weight: 600;
             color: #0d6efd;
         }
-
-        .button-text {
-            font-size: 14px;
-            margin-left: 2px;
-        }
-
-        .button-icon {
-            background-color: rgba(0, 0, 0, 0.20);
-            padding: 6px;
-        }
-        .button-icon svg {
-            margin-bottom: 1px;
-            margin-left: 1px;   
-        }
         
-
-        /* 
-        table.table {
-            margin: 0 ;
-            width: 700px;
-        }
-
-        /** only for the head of the table. */
-        /* table.table thead th {
-            padding: 0;
-        } */
-
-        /** only for the body of the table. */
-        /* table.table tbody td {
-            padding: 0;
-        } */
-
-        /** only for the head of the table. */
-        /* table.table thead th {
-            padding: 0;
-        } */
-
-        /** only for the body of the table. */
-        /* table.table tbody td {
-            margin-left: 0px;
-            padding: 0;
-        } */
         .active {
             color: #fff !important;
             font-weight: 600;
+            transition: 0.5s ease-in-out;
         }
         
+        #blah {
+            width: 159px;
+            height: 239px;
+        }
+
+        /* Split button */
+        .button {
+            display: inline-flex;
+            height: 30px;
+            padding: 0;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            overflow: hidden;
+            font-family: "Nunito", sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    
+        .button__text,
+        .button__icon {
+            display: inline-flex;
+            align-items: center;
+            padding: 0 10px;
+            color: #fff;
+            height: 100%;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+    
+        .button__icon {
+            font-size: 1.5em;
+            background-color: rgba(0, 0, 0, 0.15);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
