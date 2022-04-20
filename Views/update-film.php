@@ -106,7 +106,7 @@ if (isset($_POST['edit'])) {
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label for="<?php echo $genre['genre_list'] ?>" class="form-label form-label-sm">Genre</label>
+                                        <label for="<?php echo $genres[0]['genre_list'] ?>" class="form-label form-label-sm">Genre</label>
                                         <div class="col-sm-7 mb-3">
                                             <div class="row">
                                                 <?php foreach ($genres as $genre) : ?>

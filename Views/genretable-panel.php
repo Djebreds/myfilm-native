@@ -4,6 +4,8 @@ require '../BusinessLogic/Read.php';
 
 $read = new Read();
 $genres = $read->showListGenres();
+$value = "";
+$message = "";
 
 $countPerPage = 10;
 $countData = count($read->showListGenres());
@@ -14,7 +16,14 @@ $firstData = ($countPerPage * $activePage) - $countPerPage;
 $genres = $read->showLimitGenre($firstData, $countPerPage);
 
 if (isset($_POST['searchButton'])) {
-    $genres = $read->searchGenre($_POST['searchInput']);
+    $genres = $read->searchGenre(htmlspecialchars($_POST['searchInput']));
+    if ($_POST['searchInput'] == "") {
+        $genres = $read->showLimitGenre($firstData, $countPerPage);
+    }
+}
+
+if (isset($_POST['showAll'])) {
+    $genres = $read->showLimitGenre($firstData, $countPerPage);
 }
 
 ?>
@@ -78,7 +87,8 @@ if (isset($_POST['searchButton'])) {
                 <?php } ?>
                 <div class="col-3 ms-auto">
                     <form action="" method="POST" class="input-group input-group-sm">
-                        <input type="text" class="form-control" name="searchInput" placeholder="search..." aria-label="search..." aria-describedby="button-addon2">
+                        <input type="text" class="form-control text-secondary" name="searchInput" placeholder="search..." value="<?php if (isset($_POST['searchInput'])) $value = $_POST['searchInput'];
+                                                                                                                                    echo $value  ?>" aria-label="search..." aria-describedby="button-addon2">
                         <button class="btn btn-primary" type="submit" name="searchButton" id="button-addon2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                             </svg></button>
@@ -168,40 +178,50 @@ if (isset($_POST['searchButton'])) {
                 <?php $a++ ?>
             <?php endforeach ?>
         </table>
-        <nav aria-label="...">
-            <ul class="pagination pagination-sm">
-                <?php if ($activePage > 1) : ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?page=<?= $activePage - 1; ?>">Previous</a>
-                    </li>
-                <?php else : ?>
-                    <li class="page-item disabled">
-                        <a class="page-link" href="?page=<?= $activePage - 1; ?>">Previous</a>
-                    </li>
-                <?php endif; ?>
-                <?php for ($i = 1; $i <= $countPage; $i++) : ?>
-                    <?php if ($i == $activePage) : ?>
-                        <li class="page-item active">
-                            <a class="page-link " href="?page=<?php echo $i ?>"><?php echo $i ?></a>
+        <?php if ($genres == []) { ?>
+            <p class="text-secondary text-center fw-bold">" Data no found "</p>
+        <?php  } ?>
+        <?php if (isset($_POST['searchButton']) && $_POST['searchInput'] != "") { ?>
+            <p class="text-secondary " style="font-weight:700; font-family: 'Nunito', sans-serif; font-size: 13px;">Founded data : <?php echo count($genres) ?> </p>
+            <form action="" method="POST">
+                <button type="submit" name="showAll" class="btn btn-primary btn-sm">Show all</button>
+            </form>
+        <?php } else { ?>
+            <nav aria-label="...">
+                <ul class="pagination pagination-sm">
+                    <?php if ($activePage > 1) : ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<?= $activePage - 1; ?>">Previous</a>
                         </li>
                     <?php else : ?>
-                        <li class="page-item">
-                            <a class="page-link " href="?page=<?php echo $i ?>"><?php echo $i ?></a>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="?page=<?= $activePage - 1; ?>">Previous</a>
                         </li>
                     <?php endif; ?>
+                    <?php for ($i = 1; $i <= $countPage; $i++) : ?>
+                        <?php if ($i == $activePage) : ?>
+                            <li class="page-item active">
+                                <a class="page-link " href="?page=<?php echo $i ?>"><?php echo $i ?></a>
+                            </li>
+                        <?php else : ?>
+                            <li class="page-item">
+                                <a class="page-link " href="?page=<?php echo $i ?>"><?php echo $i ?></a>
+                            </li>
+                        <?php endif; ?>
 
-                <?php endfor; ?>
-                <?php if ($activePage < $countPage) : ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?page=<?= $activePage + 1; ?>">Next</a>
-                    </li>
-                <?php else : ?>
-                    <li class="page-item disabled">
-                        <a class="page-link" href="?page=<?= $activePage + 1; ?>">Next</a>
-                    </li>
-                <?php endif; ?>
-            </ul>
-        </nav>
+                    <?php endfor; ?>
+                    <?php if ($activePage < $countPage) : ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<?= $activePage + 1; ?>">Next</a>
+                        </li>
+                    <?php else : ?>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="?page=<?= $activePage + 1; ?>">Next</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
+        <?php } ?>
     </div>
 </div>
 <?php require 'footer.php' ?>

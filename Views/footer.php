@@ -1,6 +1,6 @@
 <div class="card mt-4 shadow  mb-2 bg-body rounded footer">
     <div class="card-body">
-        <p class="text-center text-secondary">Copyright © Refi Ahmad Fauzan 2022</p>
+        <p class="text-center text-secondary" style="font-size:12px; margin:0px;">Copyright © Refi Ahmad Fauzan 2022</p>
     </div>
 </div>
 </div>
