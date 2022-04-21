@@ -62,8 +62,7 @@ class Read extends Dabes
     // search data films with title and release date
     public function searchFilm($search)
     {
-        $sql = "SELECT * FROM films WHERE title LIKE '%$search%' OR release_date LIKE '%$search%'";
-        $query = $this->db->prepare($sql);
+        $query = $this->db->prepare("SELECT * FROM films WHERE title LIKE '%$search%' OR release_date LIKE '%$search%'");
         $query->execute();
         $data = $query->fetchAll(PDO::FETCH_ASSOC);
         return $data;
