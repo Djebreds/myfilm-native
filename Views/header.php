@@ -1,12 +1,13 @@
 <?php
+
 session_start();
 
 if (!isset($_SESSION['login'])) {
     header('Location: login-admin.php');
     exit();
 } else {
-    $username = $_SESSION['username'];
-    $email = $_SESSION['email'];
+    $username   = $_SESSION['username'];
+    $email      = $_SESSION['email'];
     $created_at = $_SESSION['created_at'];
 }
 
@@ -18,10 +19,8 @@ if ($check > 2) {
 } else {
     $profile = $username;
 }
-
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,7 +52,7 @@ if ($check > 2) {
                                 Dropright
                             </button>
                             <ul class="dropdown-menu">
-                                
+
                             </ul>
                         </div>
                     </div> -->

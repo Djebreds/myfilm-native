@@ -22,9 +22,7 @@ if (isset($_POST['add'])) {
 }
 
 ?>
-
 <?php require 'header.php' ?>
-
 <h2>Add data Film</h2>
 <div class="row">
     <div class="col">

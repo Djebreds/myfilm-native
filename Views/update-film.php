@@ -26,13 +26,8 @@ if (isset($_POST['edit'])) {
         $error = true;
     }
 }
-
 ?>
-
 <?php require 'header.php' ?>
-
-
-
 <body>
     <div class="row">
         <div class="col">
@@ -223,4 +218,4 @@ if (isset($_POST['edit'])) {
             </div>
         </div>
     </div>
-    <?php require 'footer.php' ?>
+<?php require 'footer.php' ?>

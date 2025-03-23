@@ -1,10 +1,11 @@
 <?php
 require '../BusinessLogic/Dabes.php';
 require '../BusinessLogic/Read.php';
+
 $read = new Read();
+$productions = $read->showProduction();
 $value = "";
 $message = "";
-$productions = $read->showProduction();
 
 $countPerPage = 10;
 $countData = count($read->showProduction());
@@ -25,9 +26,7 @@ if (isset($_POST['showAll'])) {
     $films = $read->showLimitProduction($firstData, $countPerPage);
 }
 ?>
-
 <?php require 'header.php' ?>
-
 <h2>Data Production</h2>
 <div class="card mt-4 shadow  mb-2 bg-body rounded">
     <div class="card-header">
@@ -230,5 +229,4 @@ if (isset($_POST['showAll'])) {
         <?php } ?>
     </div>
 </div>
-
 <?php require 'footer.php' ?>

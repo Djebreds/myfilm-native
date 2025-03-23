@@ -112,7 +112,7 @@ $populars = $read->showLimitMain(26, 4);
                                         ?>
                                         <div class="col-2 m-1 m-1" style="width: 9.1rem">
                                             <div class="card border border-0">
-                                                <img src=" ../Views/uploaded/<?php echo $upcoming['picture'] ?>" style="width: 146px; height: 218px" class="rounded-3 card-img-top" alt="...">
+                                                <img src="<?php echo $upcoming['picture'] ?>" style="width: 146px; height: 218px" class="rounded-3 card-img-top" alt="...">
                                                 <div class="card-body">
                                                     <div class="card-title">
                                                         <a href="detail-film.php?id_film=<?php echo $upcoming['id_film'] ?>" class="stretched-link"><?php echo $upcoming['title'] ?></a>
@@ -135,7 +135,7 @@ $populars = $read->showLimitMain(26, 4);
                                         ?>
                                         <div class="col-2 m-1 m-1" style="width: 9.1rem">
                                             <div class="card border border-0">
-                                                <img src=" ../Views/uploaded/<?php echo $upcoming['picture'] ?>" style="width: 146px; height: 218px" class="rounded-3 card-img-top" alt="...">
+                                                <img src="<?php echo $upcoming['picture'] ?>" style="width: 146px; height: 218px" class="rounded-3 card-img-top" alt="...">
                                                 <div class="card-body">
                                                     <div class="card-title">
                                                         <a href="detail-film.php?id_film=<?php echo $upcoming['id_film'] ?>" class="stretched-link"><?php echo $upcoming['title'] ?></a>
@@ -174,7 +174,7 @@ $populars = $read->showLimitMain(26, 4);
                         ?>
                         <div class="col-2 m-1 m-1" style="width: 9.1rem">
                             <div class="card border border-0">
-                                <img src=" ../Views/uploaded/<?php echo $poster['picture'] ?>" style="width: 146px; height: 218px" class="rounded-3 card-img-top" alt="...">
+                                <img src="<?php echo $poster['picture'] ?>" style="width: 146px; height: 218px" class="rounded-3 card-img-top" alt="...">
                                 <div class="card-body">
                                     <div class="card-title">
                                         <a href="detail-film.php?id_film=<?php echo $poster['id_film'] ?>" class="stretched-link"> <?php echo $poster['title'] ?></a>

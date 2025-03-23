@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - '9090:80' # Changed host port to 9090
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_DATABASE: myfilm
+      DB_USER: developer
+      DB_PASSWORD: myfilm
+
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: myfilm
+      MYSQL_USER: developer
+      MYSQL_PASSWORD: myfilm
+      MYSQL_ROOT_PASSWORD: myfilm

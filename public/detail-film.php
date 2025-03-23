@@ -78,7 +78,7 @@ $director = $read->searchDirector($poster[0]['name_director']);
                                     <div class="card border border-white ms-2 mb-3 mt-2">
                                         <div class="row g-0">
                                             <div class="col-md-3 m-2 p-2">
-                                                <img src="../Views/uploaded/<?php echo $poster[0]['picture'] ?>" style="width: 248px; height: 371px" class="img-fluid rounded-3" alt="...">
+                                                <img src="<?php echo $poster[0]['picture'] ?>" style="width: 248px; height: 371px" class="img-fluid rounded-3" alt="...">
                                             </div>
                                             <div class="col-md-8 m-2">
                                                 <div class="card-body">

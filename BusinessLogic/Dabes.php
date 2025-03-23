@@ -5,15 +5,13 @@ class Dabes
     // connection database
     public function __construct()
     {
-        // base connection
-        $db_user = "root";
-        $db_pass = "root";
-        $db_host = "localhost";
-        $db_name = "Films";
+        $db_user = "developer";
+        $db_pass = "myfilm";
+        $db_host = "db";
+        $db_name = "myfilm";
 
-        // check and try the connection
         try {
-            $this->db = new PDO("mysql:host={$db_host}; dbname={$db_name}", $db_user, $db_pass);
+            $this->db = new PDO("mysql:host={$db_host};dbname={$db_name}", $db_user, $db_pass);
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $exception) {
             die("Connection error: " . $exception->getMessage());
@@ -47,7 +45,7 @@ class Dabes
             echo "the picture size to big";
         }
 
-        // change name picture into random number  
+        // change name picture into random number
         $namePicture = uniqid();
         $namePicture .= ".";
         $namePicture .= $extension;
@@ -66,7 +64,7 @@ class Dabes
         return $data;
     }
 
-    // function to add user admin 
+    // function to add user admin
     public function register($data)
     {
         $username = self::validate(ucwords($data['username']));

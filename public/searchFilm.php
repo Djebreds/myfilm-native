@@ -71,7 +71,7 @@ $results = $read->searchMain($searching);
                     <?php foreach ($results as $result) { ?>
                         <div class="col-2 m-1" style="width: 9.1rem">
                             <div class="card border border-white">
-                                <img src=" ../Views/uploaded/<?php echo $result['picture'] ?>" style="width: 146px; height: 218px" class="rounded-3 card-img-top" alt="...">
+                                <img src="<?php echo $result['picture'] ?>" style="width: 146px; height: 218px" class="rounded-3 card-img-top" alt="...">
                                 <div class="card-body">
                                     <div class="card-title">
                                         <a href="detail-film.php?id_film=<?php echo $result['id_film'] ?>" class="stretched-link"> <?php echo $result['title'] ?></a>
